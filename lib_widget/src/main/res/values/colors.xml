@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_divider_color">#eeeeee</color>
+
+    <color name="lw_txt_write_color">#f0f0f0</color>
+
+    <color name="lw_write_color">#f0f0f0</color>
+
+    <color name="lw_txt_color_3">#333333</color>
+
+    <color name="lw_progress_dialog_color">#FF4081</color>
+
+    <!--分割线-->
+    <color name="lw_divider_color">#DFDFDF</color>
+
+    <color name="lw_transparent">#00000000</color>
+
+    <color name="focus_light">#F6DDB5</color>
+
+    <color name="main_red_light_color">#D73B11</color>
+
+    <color name="main_yellow_sub_color">#fd9b00</color>
+
+</resources>

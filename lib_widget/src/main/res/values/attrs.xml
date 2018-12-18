@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--比例ImageView-->
+    <declare-styleable name="XProportionImageView">
+        <attr name="xpiWidthRatio" format="float" />
+        <attr name="xpiHeightRatio" format="float" />
+        <attr name="xpiIsWidthTarget" format="boolean" />
+    </declare-styleable>
+
+    <!--比例Layout-->
+    <declare-styleable name="XProportionLayout">
+        <attr name="xplWidthRatio" format="float" />
+        <attr name="xplHeightRatio" format="float" />
+        <attr name="xplIsWidthTarget" format="boolean" />
+    </declare-styleable>
+
+</resources>

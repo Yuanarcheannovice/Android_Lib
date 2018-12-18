@@ -19,7 +19,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://raw.githubusercontent.com/Yuanarcheannovice/Android_Lib_Maven/master/maven' }
+        maven { url 'https://raw.githubusercontent.com/Yuanarcheannovice/Android_Lib/master/maven' }
     }
 }
 

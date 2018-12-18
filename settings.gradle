@@ -1,1 +1,3 @@
-include ':app', ':lib_base', ':lib_util', ':lib_widget', ':lib_adapter', ':lib_style'
+include ':app', ':lib_base',':lib_adapter', ':lib_style', ':lib_util', ':lib_widget', ':lib_tv_widget'
+
+include ':lib_tv_uninstall'

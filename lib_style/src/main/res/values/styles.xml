@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+        <!--允许焦点-->
+    <style name="FocusableStyle">
+        <item name="android:descendantFocusability">afterDescendants</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+    <!--RecyclerView的通用style-->
+    <style name="RecyclerViewBaseStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+
+</resources>

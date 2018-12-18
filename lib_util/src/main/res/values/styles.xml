@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--@android:style/Theme.DeviceDefault.Light.Dialog-->
+    <style name="AppProgressDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <!--文字大小-->
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/lw_txt_color_3</item>
+
+        <!-- 这里是修改顶部标题背景颜色，具体颜色自己定，可以是图片 -->
+        <item name="android:topDark">@android:color/white</item>
+        <!--修改底部背景颜色-->
+        <item name="android:bottomDark">@android:color/white</item>
+        <!-- 这里是修改内容区域背景颜色 -->
+        <item name="android:centerDark">@android:color/white</item>
+        <!--//窗口半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <!--设置progressbar的颜色-->
+        <item name="android:indeterminateTint" tools:ignore="NewApi">@color/lw_progress_dialog_color</item>
+        <item name="android:indeterminateTintMode" tools:ignore="NewApi">src_atop</item>
+    </style>
+
+</resources>
