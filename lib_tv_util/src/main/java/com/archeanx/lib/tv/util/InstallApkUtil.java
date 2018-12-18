@@ -1,4 +1,4 @@
-package com.archeanx.lib.util.tv.apk;
+package com.archeanx.lib.tv.util;
 
 import android.content.Context;
 import android.content.Intent;
