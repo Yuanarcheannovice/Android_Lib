@@ -47,7 +47,7 @@ public final class PreferencesHelper {
 
     }
 
-    public SharedPreferences getPre() {
+    public SharedPreferences getPreferences() {
         if (sp == null) {
             throw new RuntimeException("Please init the Context before PreferencesUtil");
         }
