@@ -5,8 +5,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 3
+        versionName "1.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -42,7 +42,7 @@ uploadArchives {
         pom.project {
             groupId rootProject.ext.groupId// 唯一标识（通常为模块包名，也可以任意）
             artifactId 'lib_util'// 项目名称（通常为类库模块名称，也可以任意）
-            version "1.0.2" // 版本号
+            version "1.0.3" // 版本号
         }
     }
 }

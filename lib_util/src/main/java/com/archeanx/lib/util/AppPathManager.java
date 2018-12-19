@@ -15,24 +15,12 @@ import java.io.File;
  * @author xz
  */
 public class AppPathManager {
-    private static int i = 0;
-    /**
-     * 更新包Apk路径
-     */
-    public static final String APP_UPDATE = "/sdcard/dj_update/";
-    /**
-     * pdf下载保存路径
-     */
-    public static final String APP_PDF_URL = "/sdcard/dj_pdf/";
-
     /**
      * 初始话文件管理类
      */
     public static void initPathManager(Context context) {
         //设置app默认文件路径
         AppPathManager.setAppPath(context);
-        ifFolderExit(APP_UPDATE);
-        ifFolderExit(APP_PDF_URL);
     }
 
     /**
@@ -181,30 +169,4 @@ public class AppPathManager {
             return false;
         }
     }
-
-
-    public static String getAppDownloadPath() {
-        return APP_UPDATE;
-    }
-
-    public static String getAppPdfUrl() {
-        return APP_PDF_URL;
-    }
-
-    /**
-     * Launcher网页路径
-     */
-    public static String getSdLauncherHtmlUrl() {
-        //  return  getExternalRootFilesCachePath().append(LAUNCHER_HTML_URL).append("www/index.html").toString();
-        return "/sdcard/dj_rc/www/index.html";
-    }
-
-    /**
-     * 更新文件路径
-     */
-    public static String getLauncherUpdateUrl() {
-        return "/sdcard/dj_rc/www/UpdateLauncher.json";
-    }
-
-
 }
