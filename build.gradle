@@ -39,7 +39,7 @@ ext {
     website = 'https://github.com/Yuanarcheannovice/Android_Lib'
     userOrg = 'yuanarcheannovice'
     repoName='Android_Lib'
-    groupId = 'com.yuanarcheannovice.android'
+    groupId = 'com.archeanx.android'
 
     //本地地址
     maven_url="../maven"
