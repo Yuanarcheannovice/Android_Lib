@@ -9,6 +9,15 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/min_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        android:textColor="@color/lw_txt_color_3"
+        android:textSize="26dp" />
 
     <ProgressBar
         android:id="@+id/min_appupdate_seekbar"
