@@ -36,9 +36,9 @@ public class LoadingDialog {
 
     private void initView() {
         mView = LayoutInflater.from(mContext).inflate(R.layout.lw_dialog_loding_layout, null);
-        mProgressBar = (ProgressBar) mView.findViewById(R.id.min_appupdate_seekbar);
-        mProgressTv = (TextView) mView.findViewById(R.id.min_appupdate_tv);
-        mCancelTv = (TextView) mView.findViewById(R.id.dll_cacenl);
+        mProgressBar = mView.findViewById(R.id.min_appupdate_seekbar);
+        mProgressTv = mView.findViewById(R.id.min_appupdate_tv);
+        mCancelTv = mView.findViewById(R.id.dll_cacenl);
         mCancelTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +59,7 @@ public class LoadingDialog {
         // 必须放到显示对话框下面，否则显示不出效果
         Window window = mDialog.getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
-        params.width =getPhoneWidth(mContext) * 4 / 5;
+        params.width = getPhoneWidth(mContext) * 4 / 5;
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         params.gravity = Gravity.CENTER;
         window.setAttributes(params);
@@ -69,27 +69,53 @@ public class LoadingDialog {
     }
 
 
-    public void refresProgress(float progress, long total) {
+    public void refresProgress(final float progress, long total) {
         if (mProgressBar != null) {
-            mProgressBar.setProgress((int) (100 * progress));
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressBar.setProgress((int) (100 * progress));
+                }
+            });
         }
         if (mProgressTv != null) {
-            mProgressTv.setText("正在下载:" + ((int) (100 * progress)) + "/100");
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressTv.setText("正在下载:" + ((int) (100 * progress)) + "/100");
+                }
+            });
         }
     }
 
-    public void refresProgress(float progress, long total, String showStr) {
+    public void refresProgress(final float progress, long total, final String showStr) {
         if (mProgressBar != null) {
-            mProgressBar.setProgress((int) (100 * progress));
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressBar.setProgress((int) (100 * progress));
+                }
+            });
         }
         if (mProgressTv != null) {
-            mProgressTv.setText(showStr + ((int) (100 * progress)) + "/100");
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressTv.setText(showStr + ((int) (100 * progress)) + "/100");
+                }
+            });
         }
     }
 
-    public void refreshText(String str) {
+    public void refreshText(final String str) {
         if (mProgressTv != null) {
-            mProgressTv.setText(str);
+            mProgressTv.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressTv.setText(str);
+
+                }
+            });
         }
     }
 
