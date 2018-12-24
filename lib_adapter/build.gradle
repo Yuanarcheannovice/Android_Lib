@@ -30,22 +30,21 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${supportVersion}"
 }
 
+
 //上传github 作为maven仓库
 apply plugin: 'maven'
 
 
-uploadArchives{
-    repositories.mavenDeployer{
-        repository(url:uri("../maven"))
-        pom.project{
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri(rootProject.ext.maven_url))
+        pom.project {
             groupId rootProject.ext.groupId// 唯一标识（通常为模块包名，也可以任意）
-            artifactId 'lib_adapter'// 项目名称（通常为类库模块名称，也可以任意）
-            version "1.0.1" // 版本号
+            artifactId project.name// 项目名称（通常为类库模块名称，也可以任意）
+            version project.android.defaultConfig.versionName // 版本号
         }
     }
 }
-
-
 
 // 指定编码
 tasks.withType(JavaCompile) {
@@ -59,7 +58,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    failOnError  false
+    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
@@ -75,4 +74,3 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-

@@ -39,8 +39,8 @@ uploadArchives {
         repository(url: uri(rootProject.ext.maven_url))
         pom.project {
             groupId rootProject.ext.groupId// 唯一标识（通常为模块包名，也可以任意）
-            artifactId 'lib_style'// 项目名称（通常为类库模块名称，也可以任意）
-            version "1.0.1" // 版本号
+            artifactId project.name// 项目名称（通常为类库模块名称，也可以任意）
+            version project.android.defaultConfig.versionName // 版本号
         }
     }
 }
@@ -73,4 +73,3 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-

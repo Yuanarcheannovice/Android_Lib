@@ -1,0 +1,74 @@
+apply plugin: 'com.android.library'
+// 谷歌浏览器内核
+//crosswalkwebview23535894arm
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0.1"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    api files('libs/xwalk_core_library.jar')
+}
+
+//上传github 作为maven仓库
+apply plugin: 'maven'
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri(rootProject.ext.maven_url))
+        pom.project {
+            groupId rootProject.ext.groupId// 唯一标识（通常为模块包名，也可以任意）
+            artifactId project.name// 项目名称（通常为类库模块名称，也可以任意）
+            version project.android.defaultConfig.versionName // 版本号
+        }
+    }
+}
+
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 制作文档(Javadoc)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}

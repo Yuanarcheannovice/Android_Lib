@@ -1,3 +1,3 @@
-include ':app', ':lib_base',':lib_adapter', ':lib_style', ':lib_util', ':lib_widget', ':lib_tv_widget', ':lib_tv_util'
+include ':app', ':lib_base', ':lib_adapter', ':lib_style', ':lib_util', ':lib_widget', ':lib_tv_widget', ':lib_tv_util', ':lib_tv_vlc', ':lib_http', ':lib_util_fresco', ':lib_crosswalk'
 
-include ':lib_tv_uninstall'
+
