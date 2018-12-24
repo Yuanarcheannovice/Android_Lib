@@ -26,5 +26,5 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support.constraint:constraint-layout:${constraintLayout}"
-
+    implementation 'com.archeanx.android:lib_tv_vlc:1.0.4'
 }
