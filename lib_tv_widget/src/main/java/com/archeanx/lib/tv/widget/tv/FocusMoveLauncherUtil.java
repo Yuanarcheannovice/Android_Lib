@@ -14,6 +14,11 @@ import com.archeanx.lib.tv.widget.R;
  * @描述 焦点移动工具类
  */
 public class FocusMoveLauncherUtil {
+
+    public static void initToActivity(Activity activity) {
+        initToActivity(activity, 0);
+    }
+
     /**
      * 在activity中初始化
      */
@@ -31,7 +36,7 @@ public class FocusMoveLauncherUtil {
 
                     @Override
                     public void onGlobalFocusChanged(final View oldFocus, final View newFocus) {
-                        if (oldFocus != null && FocusMoveLauncherHelper.getInstance().getBigAnimViews().get(oldFocus.getId()) == null) {
+                        if (oldFocus != null && FocusMoveLauncherHelper.getInstance().getMoveAnimViews().get(oldFocus.getId()) == null) {
                             //去掉一般
                             FocusAnimationUtil.setViewAnimatorBig(oldFocus, false, 300, 1.1f);
                         }
