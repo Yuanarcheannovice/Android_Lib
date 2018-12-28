@@ -27,17 +27,22 @@ public class FocusMoveHelper {
     /**
      * 不需要动画效果的view
      */
-    private ArrayMap<Integer, Integer> mNoAnimViews = new ArrayMap<>();
+    private ArrayMap<Integer, Integer> mNoAnimViewIds = new ArrayMap<>();
 
     /**
      * 只有放大效果的view
      */
-    private ArrayMap<Integer, Integer> mBigAnimViews = new ArrayMap<>();
+    private ArrayMap<Integer, Integer> mBigAnimViewIds = new ArrayMap<>();
 
     /**
      * 只移动效果的view
      */
-    private ArrayMap<Integer, Integer> mMoveAnimViews = new ArrayMap<>();
+    private ArrayMap<Integer, Integer> mMoveAnimViewIds = new ArrayMap<>();
+
+    /**
+     * fragment 最大的 viewGroup id
+     */
+    private ArrayMap<Integer, Integer> mFragParentViewIds = new ArrayMap<>();
 
     /**
      * 绑定View的跳转
@@ -47,24 +52,31 @@ public class FocusMoveHelper {
     /**
      * 旧的焦点view id
      */
-    private int mOldFocusViewId=View.NO_ID;
+    private int mOldFocusViewId = View.NO_ID;
 
     /**
      * 新的焦点view id
      */
-    private int mNewFocusViewId=View.NO_ID;
+    private int mNewFocusViewId = View.NO_ID;
 
     /**
      * Tab栏 父布局view id
-     *
      */
-    private int mTabLayoutViewId=View.NO_ID;
+    private int mTabLayoutViewId = View.NO_ID;
 
     /**
      * viewpager的页码
      */
-    private int mViewpageIndex=0;
+    private int mViewpageIndex = 0;
 
+
+    public ArrayMap<Integer, Integer> getFragParentViewIds() {
+        return mFragParentViewIds;
+    }
+
+    public void addFragParentViewIds(@NonNull Integer key, @NonNull Integer value) {
+        mFragParentViewIds.put(key, value);
+    }
 
     public int getViewpageIndex() {
         return mViewpageIndex;
@@ -73,13 +85,6 @@ public class FocusMoveHelper {
     public void setViewpageIndex(int viewpageIndex) {
         mViewpageIndex = viewpageIndex;
     }
-
-
-
-
-
-
-
 
 
     public int getOldFocusViewId() {
@@ -104,7 +109,6 @@ public class FocusMoveHelper {
 
     /**
      * 设置 tab 栏 viewGroup id
-     *
      */
     public void setTabLayoutViewId(int tabLayoutViewId) {
         mTabLayoutViewId = tabLayoutViewId;
@@ -116,14 +120,9 @@ public class FocusMoveHelper {
 
 
     /**
-     *
      * @return 根据旧的view 获取下一个需要获取焦点的view
      */
     public Integer getCorrespondingView() {
-
-        if (mAppointNextView.get(mOldFocusViewId) == null) {
-            return View.NO_ID;
-        }
         return mAppointNextView.get(mOldFocusViewId);
     }
 
@@ -137,28 +136,28 @@ public class FocusMoveHelper {
         mAppointNextView.put(oldViewId, newViewId);
     }
 
-    public ArrayMap<Integer, Integer> getNoAnimViews() {
-        return mNoAnimViews;
+    public ArrayMap<Integer, Integer> getNoAnimViewIds() {
+        return mNoAnimViewIds;
     }
 
     public void addNoAnimViews(@NonNull Integer key, @NonNull Integer value) {
-        mNoAnimViews.put(key, value);
+        mNoAnimViewIds.put(key, value);
     }
 
 
-    public ArrayMap<Integer, Integer> getBigAnimViews() {
-        return mBigAnimViews;
+    public ArrayMap<Integer, Integer> getBigAnimViewIds() {
+        return mBigAnimViewIds;
     }
 
     public void addBigAnimViews(@NonNull Integer key, @NonNull Integer value) {
-        mBigAnimViews.put(key, value);
+        mBigAnimViewIds.put(key, value);
     }
 
-    public ArrayMap<Integer, Integer> getMoveAnimViews() {
-        return mMoveAnimViews;
+    public ArrayMap<Integer, Integer> getMoveAnimViewIds() {
+        return mMoveAnimViewIds;
     }
 
     public void addMoveAnimViews(@NonNull Integer key, @NonNull Integer value) {
-        mMoveAnimViews.put(key, value);
+        mMoveAnimViewIds.put(key, value);
     }
 }

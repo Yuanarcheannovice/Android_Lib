@@ -41,7 +41,7 @@ public class FocusMoveUtil {
                     public void onGlobalFocusChanged(final View oldFocus, final View newFocus) {
                         if (oldFocus != null) {
                             FocusMoveHelper.getInstance().setOldFocusViewId(oldFocus.getId());
-                            if (FocusMoveHelper.getInstance().getMoveAnimViews().get(oldFocus.getId()) == null) {
+                            if (FocusMoveHelper.getInstance().getMoveAnimViewIds().get(oldFocus.getId()) == null && FocusMoveHelper.getInstance().getNoAnimViewIds().get(oldFocus.getId()) == null) {
                                 //移除变大效果
                                 FocusAnimationUtil.setViewAnimatorBig(oldFocus, false, 300, 1.1f);
                             }
@@ -52,31 +52,25 @@ public class FocusMoveUtil {
                         }
                         FocusMoveHelper.getInstance().setNewFocusViewId(newFocus.getId());
 
-                        if (FocusMoveHelper.getInstance().getNoAnimViews().get(newFocus.getId()) != null) {
+                        if (FocusMoveHelper.getInstance().getNoAnimViewIds().get(newFocus.getId()) != null) {
                             focusView.setVisibility(View.GONE);
                             return;
                         }
-                        if (FocusMoveHelper.getInstance().getBigAnimViews().get(newFocus.getId()) != null) {
+                        if (FocusMoveHelper.getInstance().getBigAnimViewIds().get(newFocus.getId()) != null) {
                             //只能放大  焦点过去后，先放大view，然后焦点框渐变显示
-                            if (focusView.getVisibility() == View.VISIBLE) {
-                                focusView.setVisibility(View.GONE);
-                            }
-                            //显示在其他view 上面
                             newFocus.bringToFront();
                             FocusAnimationUtil.setViewAnimatorBig(newFocus, true, 300, 1.1f);
                             FocusAnimationUtil.focusAlphaAnimator(newFocus, focusView, 1.1f);
-                        } else if (FocusMoveHelper.getInstance().getMoveAnimViews().get(newFocus.getId()) != null) {
+                        } else if (FocusMoveHelper.getInstance().getMoveAnimViewIds().get(newFocus.getId()) != null) {
                             //只能移动 没有放大效果，焦点框移动
-                            if (focusView.getVisibility() == View.GONE) {
-                                focusView.setVisibility(View.VISIBLE);
-                            }
                             FocusAnimationUtil.focusMoveAnimator(newFocus, focusView, -1, 43, 43);
+                        } else if (oldFocus != null && FocusMoveHelper.getInstance().getFragParentViewIds().get(oldFocus.getId()) != null) {
+                            //如果oldFocus是fragment 的最大Viewgroup,//那么下一个view 则执行 渐变，放大动画
+                            newFocus.bringToFront();
+                            FocusAnimationUtil.setViewAnimatorBig(newFocus, true, 300, 1.1f);
+                            FocusAnimationUtil.focusAlphaAnimator(newFocus, focusView, 1.1f);
                         } else {
                             //放大和移动
-                            if (focusView.getVisibility() == View.GONE) {
-                                focusView.setVisibility(View.VISIBLE);
-                            }
-                            //显示在其他view 上面
                             newFocus.bringToFront();
                             FocusAnimationUtil.setViewAnimatorBig(newFocus, true, 300, 1.1f);
                             FocusAnimationUtil.focusMoveAnimatorBig(newFocus, focusView, 1.1f);
@@ -90,11 +84,11 @@ public class FocusMoveUtil {
     /**
      * 没有tab栏的tv界面
      *
-     * @param activity fragment 对应activity
+     * @param activity   fragment 对应activity
      * @param parentView fragment最大的Viewgroup
-     *
      */
     public static void initNoTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView) {
+        FocusMoveHelper.getInstance().addFragParentViewIds(parentView.getId(), parentView.getId());
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         //设置焦点
@@ -111,7 +105,7 @@ public class FocusMoveUtil {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    if (FocusMoveHelper.getInstance().getCorrespondingView() != View.NO_ID) {
+                    if (FocusMoveHelper.getInstance().getCorrespondingView() != null) {
                         View targetView = activity.findViewById(FocusMoveHelper.getInstance().getCorrespondingView());
                         if (targetView != null) {
                             targetView.requestFocus();
@@ -146,7 +140,7 @@ public class FocusMoveUtil {
                 if (hasFocus) {
                     if (tabNextFcousViewId != View.NO_ID && isOldViewToTab(activity)) {
                         activity.findViewById(tabNextFcousViewId).requestFocus();
-                    } else if (FocusMoveHelper.getInstance().getCorrespondingView() != View.NO_ID) {
+                    } else if (FocusMoveHelper.getInstance().getCorrespondingView() != null) {
                         View targetView = activity.findViewById(FocusMoveHelper.getInstance().getCorrespondingView());
                         if (targetView != null) {
                             targetView.requestFocus();
@@ -156,6 +150,7 @@ public class FocusMoveUtil {
             }
         });
     }
+
 
     /**
      * 判断 旧的焦点view的父view 是不是tab栏的
