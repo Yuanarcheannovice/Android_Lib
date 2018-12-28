@@ -106,9 +106,14 @@ public class FocusMoveUtil {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     if (FocusMoveHelper.getInstance().getCorrespondingView() != null) {
-                        View targetView = activity.findViewById(FocusMoveHelper.getInstance().getCorrespondingView());
+                        final View targetView = activity.findViewById(FocusMoveHelper.getInstance().getCorrespondingView());
                         if (targetView != null) {
-                            targetView.requestFocus();
+                            parentView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    targetView.requestFocus();
+                                }
+                            }, 300);
                         }
                     }
                 }
@@ -141,9 +146,15 @@ public class FocusMoveUtil {
                     if (tabNextFcousViewId != View.NO_ID && isOldViewToTab(activity)) {
                         activity.findViewById(tabNextFcousViewId).requestFocus();
                     } else if (FocusMoveHelper.getInstance().getCorrespondingView() != null) {
-                        View targetView = activity.findViewById(FocusMoveHelper.getInstance().getCorrespondingView());
+                        final View targetView = activity.findViewById(FocusMoveHelper.getInstance().getCorrespondingView());
                         if (targetView != null) {
-                            targetView.requestFocus();
+                            parentView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    targetView.requestFocus();
+                                }
+                            }, 300);
+
                         }
                     }
                 }
