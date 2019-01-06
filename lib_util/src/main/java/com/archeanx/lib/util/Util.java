@@ -22,6 +22,28 @@ import java.util.Map;
 
 public class Util {
 
+    private static long lastClickTime;
+
+    public static boolean isFastDoubleClick() {
+        return isFastDoubleClick(300);
+    }
+
+    /**
+     * @param times
+     * @return
+     * @方法说明:防止控件被重复点击，如果点击间隔时间小于指定时间就点击无 @方法名称:isFastDoubleClick
+     * @返回 boolean
+     */
+    public static boolean isFastDoubleClick(long times) {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < times) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
+
     /**
      * 获取mac地址 有线网络的
      */
@@ -167,5 +189,6 @@ public class Util {
         return different;
 
     }
+
 
 }
