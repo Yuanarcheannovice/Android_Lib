@@ -24,8 +24,8 @@ public class Util {
 
     private static long lastClickTime;
 
-    public static boolean isFastDoubleClick() {
-        return isFastDoubleClick(300);
+    public static boolean isNoDoubleClick() {
+        return isNoDoubleClick(300);
     }
 
     /**
@@ -34,14 +34,14 @@ public class Util {
      * @方法说明:防止控件被重复点击，如果点击间隔时间小于指定时间就点击无 @方法名称:isFastDoubleClick
      * @返回 boolean
      */
-    public static boolean isFastDoubleClick(long times) {
+    public static boolean isNoDoubleClick(long times) {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
         if (0 < timeD && timeD < times) {
-            return true;
+            return false;
         }
         lastClickTime = time;
-        return false;
+        return true;
     }
 
     /**
