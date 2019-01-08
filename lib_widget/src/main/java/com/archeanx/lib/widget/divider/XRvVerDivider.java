@@ -16,6 +16,7 @@ import com.archeanx.lib.widget.divider.util.Y_DividerItemDecoration;
  * @date 8017/5/1 0001
  */
 
+
 public class XRvVerDivider extends Y_DividerItemDecoration {
     private int mColor;
     private int mWidthDp;

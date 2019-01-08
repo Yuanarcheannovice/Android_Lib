@@ -87,7 +87,7 @@ public class FocusMoveUtil {
      * @param activity   fragment 对应activity
      * @param parentView fragment最大的Viewgroup
      */
-    public static void initNoTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView) {
+    public static void initNoTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final View focusView) {
         FocusMoveHelper.getInstance().addFragParentViewIds(parentView.getId(), parentView.getId());
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -115,6 +115,8 @@ public class FocusMoveUtil {
                                 }
                             }, 300);
                         }
+                    }else{
+                        focusView.requestFocus();
                     }
                 }
             }
