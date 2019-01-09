@@ -3,6 +3,7 @@ package com.archeanx.lib.tv.widget.tv;
 import android.app.Activity;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,10 +85,11 @@ public class FocusMoveUtil {
     /**
      * 没有tab栏的tv界面
      *
-     * @param activity   fragment 对应activity
-     * @param parentView fragment最大的Viewgroup
+     * @param activity         fragment 对应activity
+     * @param parentView       fragment最大的Viewgroup
+     * @param defaultFocusView 当焦点失去响应的时候，默认到这个焦点上
      */
-    public static void initNoTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final View focusView) {
+    public static void initNoTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final View defaultFocusView) {
         FocusMoveHelper.getInstance().addFragParentViewIds(parentView.getId(), parentView.getId());
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -114,9 +116,21 @@ public class FocusMoveUtil {
                                     targetView.requestFocus();
                                 }
                             }, 300);
+                        } else {
+                            parentView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    defaultFocusView.requestFocus();
+                                }
+                            });
                         }
-                    }else{
-                        focusView.requestFocus();
+                    } else {
+                        parentView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                defaultFocusView.requestFocus();
+                            }
+                        });
                     }
                 }
             }
@@ -128,7 +142,7 @@ public class FocusMoveUtil {
      * @param parentView         fragment中最大布局view
      * @param tabNextFcousViewId tab栏下来时，需要有焦点的view
      */
-    public static void initTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final int tabNextFcousViewId) {
+    public static void initTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final int tabNextFcousViewId, final View defaultFocusView) {
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         //设置焦点
@@ -157,7 +171,21 @@ public class FocusMoveUtil {
                                 }
                             }, 300);
 
+                        } else {
+                            parentView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    defaultFocusView.requestFocus();
+                                }
+                            });
                         }
+                    } else {
+                        parentView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                defaultFocusView.requestFocus();
+                            }
+                        });
                     }
                 }
             }
