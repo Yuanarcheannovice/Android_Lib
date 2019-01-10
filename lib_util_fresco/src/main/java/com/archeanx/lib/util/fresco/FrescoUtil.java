@@ -17,21 +17,25 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 public class FrescoUtil {
 
+    public static String getShowAssets(String imageName){
+       return Uri.parse("asset:///ico-image/" + imageName).toString();
+    }
+
     /**
      * 显示 assets的图片
      *
      * @param draweeView
-     * @param imageNmae  图片名字 不带后缀
+     * @param imageName  图片名字 不带后缀
      */
-    public static void showAssetsToPng(SimpleDraweeView draweeView, @NonNull String imageNmae) {
-        if (!TextUtils.isEmpty(imageNmae)) {
-            showAssets(draweeView, imageNmae + ".png");
+    public static void showAssetsToPng(SimpleDraweeView draweeView, @NonNull String imageName) {
+        if (!TextUtils.isEmpty(imageName)) {
+            showAssets(draweeView, imageName + ".png");
         }
     }
 
-    public static void showAssetsToJpg(SimpleDraweeView draweeView, @NonNull String imageNmae) {
-        if (!TextUtils.isEmpty(imageNmae)) {
-            showAssets(draweeView, imageNmae + ".jpg");
+    public static void showAssetsToJpg(SimpleDraweeView draweeView, @NonNull String imageName) {
+        if (!TextUtils.isEmpty(imageName)) {
+            showAssets(draweeView, imageName + ".jpg");
         }
     }
 
@@ -39,11 +43,11 @@ public class FrescoUtil {
      * 显示 assets 中ico-image的图片
      *
      * @param draweeView
-     * @param imageNmae  图片名字
+     * @param imageName  图片名字
      */
-    public static void showAssets(SimpleDraweeView draweeView, String imageNmae) {
-        if (!TextUtils.isEmpty(imageNmae)) {
-            draweeView.setImageURI(Uri.parse("asset:///ico-image/" + imageNmae));
+    public static void showAssets(SimpleDraweeView draweeView, String imageName) {
+        if (!TextUtils.isEmpty(imageName)) {
+            draweeView.setImageURI(Uri.parse("asset:///ico-image/" + imageName));
         }
     }
 
@@ -51,11 +55,11 @@ public class FrescoUtil {
      * 显示 assets 中ico-image的图片
      *
      * @param draweeView
-     * @param imageNmae  图片名字
+     * @param imageName  图片名字
      */
-    public static void showWeatherToAssets(SimpleDraweeView draweeView, String imageNmae) {
-        if (!TextUtils.isEmpty(imageNmae)) {
-            draweeView.setImageURI(Uri.parse("asset:///cond_icon_heweather/" + imageNmae));
+    public static void showWeatherToAssets(SimpleDraweeView draweeView, String imageName) {
+        if (!TextUtils.isEmpty(imageName)) {
+            draweeView.setImageURI(Uri.parse("asset:///cond_icon_heweather/" + imageName));
         }
     }
 
@@ -63,11 +67,11 @@ public class FrescoUtil {
      * 显示 assets的图片
      *
      * @param draweeView
-     * @param imageNmae  图片名字
+     * @param imageName  图片名字
      */
-    public static void showAssets(String url, SimpleDraweeView draweeView, String imageNmae) {
-        if (!TextUtils.isEmpty(imageNmae)) {
-            draweeView.setImageURI(Uri.parse("asset:///ico-image/" + imageNmae));
+    public static void showAssets(String url, SimpleDraweeView draweeView, String imageName) {
+        if (!TextUtils.isEmpty(imageName)) {
+            draweeView.setImageURI(Uri.parse("asset:///ico-image/" + imageName));
         }
     }
 
