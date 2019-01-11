@@ -72,17 +72,7 @@ public class FocusMoveUtil {
                             focusView.setVisibility(View.GONE);
                             return;
                         }
-                        if (oldFocus != null && FocusMoveHelper.getInstance().getFragParentViewIds().get(oldFocus.getId()) != null) {
-                            //如果oldFocus是fragment 的最大Viewgroup,//那么下一个view 则执行 相对应的动画
-                            if (FocusMoveHelper.getInstance().getMoveAnimViewIds().get(newFocus.getId()) != null) {
-                                //标识只能移动，就需要把放大效果去掉
-                                FocusAnimationUtil.focusAlphaAnimator(newFocus, focusView, 1.1f,0,0);
-                            } else {
-                                newFocus.bringToFront();
-                                FocusAnimationUtil.setViewAnimatorBig(newFocus, true, 300, 1.1f);
-                                FocusAnimationUtil.focusAlphaAnimator(newFocus, focusView, 1.1f);
-                            }
-                        } else if (FocusMoveHelper.getInstance().getBigAnimViewIds().get(newFocus.getId()) != null) {
+                        if (FocusMoveHelper.getInstance().getBigAnimViewIds().get(newFocus.getId()) != null) {
                             //只能放大  焦点过去后，先放大view，然后焦点框渐变显示
                             newFocus.bringToFront();
                             FocusAnimationUtil.setViewAnimatorBig(newFocus, true, 300, 1.1f);
@@ -90,6 +80,11 @@ public class FocusMoveUtil {
                         } else if (FocusMoveHelper.getInstance().getMoveAnimViewIds().get(newFocus.getId()) != null) {
                             //只能移动 没有放大效果，焦点框移动
                             FocusAnimationUtil.focusMoveAnimator(newFocus, focusView, -1, 43, 43);
+                        } else if (oldFocus != null && FocusMoveHelper.getInstance().getFragParentViewIds().get(oldFocus.getId()) != null) {
+                            //如果oldFocus是fragment 的最大Viewgroup,//那么下一个view 则执行 渐变，放大动画
+                            newFocus.bringToFront();
+                            FocusAnimationUtil.setViewAnimatorBig(newFocus, true, 300, 1.1f);
+                            FocusAnimationUtil.focusAlphaAnimator(newFocus, focusView, 1.1f);
                         } else {
                             //放大和移动
                             newFocus.bringToFront();
