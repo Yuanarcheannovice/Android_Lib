@@ -21,19 +21,25 @@ public class FocusAnimationUtil {
         focusAlphaAnimator(view, focusView, 1);
     }
 
+
+    public static void focusAlphaAnimator(final View view, final View focusView, float scale) {
+        focusAlphaAnimator(view,focusView,scale,43,43);
+    }
+
+
     /**
      * 焦点渐变显示动画
      * 焦点view 渐变显示在 目标view上
      */
-    public static void focusAlphaAnimator(final View view, final View focusView, float scale) {
+    public static void focusAlphaAnimator(final View view, final View focusView, float scale, int offSetX, int offSetY) {
 
         // 先判断，下一个即将获取焦点的目标veiw的坐标 是不是超过屏幕宽高
         int[] toLocation = new int[2];
         view.getLocationOnScreen(toLocation);
 
 
-        float toWidth = view.getWidth() * scale + 43;
-        float toHeight = view.getHeight() * scale + 43;
+        float toWidth = view.getWidth() * scale + offSetX;
+        float toHeight = view.getHeight() * scale + offSetY;
         float toX = toLocation[0] - (toWidth - view.getWidth()) / 2;
         float toY = toLocation[1] - (toHeight - view.getHeight()) / 2;
 
