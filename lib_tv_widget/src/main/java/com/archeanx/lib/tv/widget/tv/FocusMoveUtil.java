@@ -18,15 +18,17 @@ import com.archeanx.lib.tv.widget.R;
  */
 public class FocusMoveUtil {
 
-
-    public static void initNoTabActivity(Activity activity) {
-        initNoTabActivity(activity, 0);
+    public static View initFocusView(Activity activity) {
+       return initFocusView(activity, 0);
     }
 
     /**
-     * 在activity中初始化
+     * 初始化 焦点框view
+     *
+     * @param activity
+     * @param focusImg
      */
-    public static void initNoTabActivity(Activity activity, @DrawableRes int focusImg) {
+    public static View initFocusView(Activity activity, @DrawableRes int focusImg) {
         //设置view的焦点被选中监听
         final View focusView = new View(activity);
         if (focusImg == 0) {
@@ -34,7 +36,20 @@ public class FocusMoveUtil {
         }
         focusView.setBackgroundResource(focusImg);
         ((ViewGroup) activity.getWindow().getDecorView()).addView(focusView);
+        return focusView;
+    }
 
+
+    public static void initNoTabActivity(Activity activity) {
+        initNoTabActivity(activity, 0);
+    }
+
+
+    /**
+     * 在activity中初始化
+     */
+    public static void initNoTabActivity(Activity activity, @DrawableRes int focusImg) {
+        final View focusView = initFocusView(activity, focusImg);
         activity.getWindow().getDecorView().getViewTreeObserver().
                 addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
 
