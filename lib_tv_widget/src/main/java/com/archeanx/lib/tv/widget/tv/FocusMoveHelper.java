@@ -69,6 +69,19 @@ public class FocusMoveHelper {
      */
     private int mViewpageIndex = 0;
 
+    /**
+     * 被选中的tab栏id
+     */
+    private int mSelectTabViewId=View.NO_ID;
+
+
+    public int getSelectTabViewId() {
+        return mSelectTabViewId;
+    }
+
+    public void setSelectTabViewId(int selectTabViewId) {
+        mSelectTabViewId = selectTabViewId;
+    }
 
     public ArrayMap<Integer, Integer> getFragParentViewIds() {
         return mFragParentViewIds;
