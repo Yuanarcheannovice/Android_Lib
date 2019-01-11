@@ -105,7 +105,10 @@ public class FocusMoveUtil {
      * @param defaultFocusView 当焦点失去响应的时候，默认到这个焦点上
      */
     public static void initNoTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final View defaultFocusView) {
+        //标识fragment最大的布局的id
         FocusMoveHelper.getInstance().addFragParentViewIds(parentView.getId(), parentView.getId());
+        //fragemnt最大的布局不应该有动画效果
+        FocusMoveHelper.getInstance().addNoAnimViews(parentView.getId(),parentView.getId());
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         //设置焦点
@@ -158,7 +161,10 @@ public class FocusMoveUtil {
      * @param tabNextFcousViewId tab栏下来时，需要有焦点的view
      */
     public static void initTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final int tabNextFcousViewId, final View defaultFocusView) {
+        //标识fragment最大的布局的id
         FocusMoveHelper.getInstance().addFragParentViewIds(parentView.getId(), parentView.getId());
+        //fragemnt最大的布局不应该有动画效果
+        FocusMoveHelper.getInstance().addNoAnimViews(parentView.getId(),parentView.getId());
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         //设置焦点
