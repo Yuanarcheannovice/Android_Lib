@@ -158,6 +158,7 @@ public class FocusMoveUtil {
      * @param tabNextFcousViewId tab栏下来时，需要有焦点的view
      */
     public static void initTabFragmentParentLayout(@NonNull final Activity activity, final ViewGroup parentView, final int tabNextFcousViewId, final View defaultFocusView) {
+        FocusMoveHelper.getInstance().addFragParentViewIds(parentView.getId(), parentView.getId());
         //会优先其子类控件而获取到焦点
         parentView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         //设置焦点
