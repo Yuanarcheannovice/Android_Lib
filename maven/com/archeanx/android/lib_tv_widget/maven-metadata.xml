@@ -3,7 +3,7 @@
   <groupId>com.archeanx.android</groupId>
   <artifactId>lib_tv_widget</artifactId>
   <versioning>
-    <release>1.1.6</release>
+    <release>1.1.7</release>
     <versions>
       <version>1.0.1</version>
       <version>1.0.2</version>
@@ -20,7 +20,8 @@
       <version>1.1.4</version>
       <version>1.1.5</version>
       <version>1.1.6</version>
+      <version>1.1.7</version>
     </versions>
-    <lastUpdated>20190111081222</lastUpdated>
+    <lastUpdated>20190112025730</lastUpdated>
   </versioning>
 </metadata>

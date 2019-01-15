@@ -1,10 +1,13 @@
 package com.archeanx.lib.adapter;
 
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 
 import com.archeanx.lib.adapter.xutil.XRvViewHolder;
@@ -34,7 +37,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      * 设置状态文字 颜色
      * resouce
      */
-    @ColorRes
+    @ColorInt
     protected int getStatusTextColor() {
         return 0;
     }
@@ -44,6 +47,22 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      * dp
      */
     protected int getStatusTextSize() {
+        return 0;
+    }
+
+    /**
+     * 设置状态进度条宽
+     * dp
+     */
+    protected int getStatusProgressWidth() {
+        return 0;
+    }
+
+    /**
+     * 设置状态进度条高
+     * dp
+     */
+    protected int getStatusProgressHeight() {
         return 0;
     }
 
@@ -169,6 +188,13 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     @Override
     public final void onBindViewHolder(@NonNull XRvViewHolder holder, int position) {
         if (getItemViewType(position) == ITEM_STATUS) {
+            ProgressBar progressBar = holder.getView(R.id.ie_progressBar);
+            if (getStatusProgressHeight() != 0 && getStatusProgressWidth() != 0) {
+                ViewGroup.LayoutParams layoutParams = progressBar.getLayoutParams();
+                layoutParams.height = getStatusProgressHeight();
+                layoutParams.width = getStatusProgressWidth();
+                progressBar.setLayoutParams(layoutParams);
+            }
             holder.setText(R.id.ie_tv, mStatusTip);
             if (getStatusTextColor() != 0) {
                 holder.setTextColor(R.id.ie_tv, getStatusTextColor());
