@@ -81,8 +81,11 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         if (loading) {
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
-                mDatas.add(initStatusLayout());
             }
+            if (mDatas.size() > 0) {
+                mDatas.clear();
+            }
+            mDatas.add(initStatusLayout());
             mStatusTip = "加载中...";
             notifyDataSetChanged();
         }
@@ -96,8 +99,11 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         if (empty) {
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
-                mDatas.add(initStatusLayout());
             }
+            if (mDatas.size() > 0) {
+                mDatas.clear();
+            }
+            mDatas.add(initStatusLayout());
             mStatusTip = "暂无数据...";
             notifyDataSetChanged();
         }
@@ -111,8 +117,11 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         if (error) {
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
-                mDatas.add(initStatusLayout());
             }
+            if (mDatas.size() > 0) {
+                mDatas.clear();
+            }
+            mDatas.add(initStatusLayout());
             mStatusTip = "加载失败,请检查网络!";
             notifyDataSetChanged();
         }
