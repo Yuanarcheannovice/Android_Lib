@@ -1,9 +1,12 @@
 package com.archeanx.lib.util.fresco;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 
@@ -14,6 +17,7 @@ import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -25,8 +29,19 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 public class FrescoUtil {
 
-    public static String getShowAssets(String imageName){
-       return Uri.parse("asset:///ico-image/" + imageName).toString();
+    public static void init(Context context) {
+        //对ImagePipelineConfig进行一些配置
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
+                .setDownsampleEnabled(true)// 对图片进行自动缩放
+                .setResizeAndRotateEnabledForNetwork(true) // 对网络图片进行resize处理，减少内存消耗
+                .setBitmapsConfig(Bitmap.Config.RGB_565)//图片设置RGB_565，减小内存开销  fresco默认情况下是RGB_8888
+                .build();
+        Fresco.initialize(context, config);
+    }
+
+
+    public static String getShowAssets(String imageName) {
+        return Uri.parse("asset:///ico-image/" + imageName).toString();
     }
 
     /**
