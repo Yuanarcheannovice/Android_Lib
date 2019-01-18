@@ -122,7 +122,7 @@ public class AppPathManager {
     }
 
     /**
-     * 方法说明:递归删除文件
+     * 方法说明:递归删除文件 不删除任何文件夹
      * 方法名称:DeleteFile
      * 返回值:void
      */
@@ -141,12 +141,36 @@ public class AppPathManager {
                     return;
                 }
                 for (File f : childFile) {
-                    DeleteFileAndDir(f);
+                    DeleteFileNoDir(f);
                 }
-                file.delete();
             }
         }
+    }
 
+    /**
+     * 方法说明:递归删除文件 不删除当前文件夹
+     * 方法名称:DeleteFile
+     * 返回值:void
+     */
+    public static void DeleteFileNoThis(File file) {
+        if (!file.exists()) {
+            return;
+        } else {
+            if (file.isFile()) {
+                file.delete();
+                return;
+            }
+            if (file.isDirectory()) {
+                File[] childFile = file.listFiles();
+                if (childFile == null || childFile.length == 0) {
+                    file.delete();
+                    return;
+                }
+                for (File f : childFile) {
+                    DeleteFileAndDir(f);
+                }
+            }
+        }
     }
 
 
