@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:text="当前进度: 1/100"
+        android:text="当前进度: 0/100"
         android:textColor="@color/lw_txt_color_3"
         android:textSize="28dp" />
 
