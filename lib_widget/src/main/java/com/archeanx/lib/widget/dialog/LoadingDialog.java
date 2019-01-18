@@ -96,6 +96,10 @@ public class LoadingDialog {
     }
 
     public void refresProgressToNumber(final float progress, final long total, final String showStr) {
+        refresProgressToNumber(progress, total, showStr, false);
+    }
+
+    public void refresProgressToNumber(final float progress, final long total, final String showStr, final boolean isShowCompany) {
         if (mProgressBar != null) {
             mProgressBar.post(new Runnable() {
                 @Override
@@ -108,7 +112,11 @@ public class LoadingDialog {
             mProgressBar.post(new Runnable() {
                 @Override
                 public void run() {
-                    mProgressTv.setText(showStr + String.valueOf((long) (progress * total)) + "/" + String.valueOf(total));
+                    if (isShowCompany) {
+                        mProgressTv.setText(showStr + String.valueOf((long) (progress * total)) + "/" + String.valueOf(total) + "  (kb)");
+                    } else {
+                        mProgressTv.setText(showStr + String.valueOf((long) (progress * total)) + "/" + String.valueOf(total));
+                    }
                 }
             });
         }
