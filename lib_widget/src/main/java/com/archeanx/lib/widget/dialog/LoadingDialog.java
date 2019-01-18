@@ -108,7 +108,7 @@ public class LoadingDialog {
             mProgressBar.post(new Runnable() {
                 @Override
                 public void run() {
-                    mProgressTv.setText(showStr + String.valueOf(progress) + "/" + String.valueOf(total));
+                    mProgressTv.setText(showStr + String.valueOf((long) (progress * total)) + "/" + String.valueOf(total));
                 }
             });
         }
