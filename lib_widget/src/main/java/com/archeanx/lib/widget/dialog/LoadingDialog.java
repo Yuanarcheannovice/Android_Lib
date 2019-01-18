@@ -1,5 +1,6 @@
 package com.archeanx.lib.widget.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Point;
@@ -72,22 +73,7 @@ public class LoadingDialog {
 
 
     public void refresProgress(final float progress, long total) {
-        if (mProgressBar != null) {
-            mProgressBar.post(new Runnable() {
-                @Override
-                public void run() {
-                    mProgressBar.setProgress((int) (100 * progress));
-                }
-            });
-        }
-        if (mProgressTv != null) {
-            mProgressBar.post(new Runnable() {
-                @Override
-                public void run() {
-                    mProgressTv.setText("正在下载:" + ((int) (100 * progress)) + "/100");
-                }
-            });
-        }
+        refresProgress(progress, total, "正在下载:");
     }
 
     public void refresProgress(final float progress, long total, final String showStr) {
@@ -109,8 +95,27 @@ public class LoadingDialog {
         }
     }
 
-    public void refreshTitle(final String titleStr){
-        if(mTitleTv!=null){
+    public void refresProgressToNumber(final float progress, final long total, final String showStr) {
+        if (mProgressBar != null) {
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressBar.setProgress((int) (100 * progress));
+                }
+            });
+        }
+        if (mProgressTv != null) {
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressTv.setText(showStr + String.valueOf(progress) + "/" + String.valueOf(total));
+                }
+            });
+        }
+    }
+
+    public void refreshTitle(final String titleStr) {
+        if (mTitleTv != null) {
             mTitleTv.post(new Runnable() {
                 @Override
                 public void run() {
@@ -152,7 +157,7 @@ public class LoadingDialog {
      * 得到手机宽度 返回px
      */
     public static int getPhoneWidth(Context context) {
-        WindowManager windowManager = (WindowManager) context.getApplicationContext().getSystemService("window");
+        @SuppressLint("WrongConstant") WindowManager windowManager = (WindowManager) context.getApplicationContext().getSystemService("window");
         Display display = windowManager.getDefaultDisplay();
         Point point = new Point();
         display.getSize(point);
