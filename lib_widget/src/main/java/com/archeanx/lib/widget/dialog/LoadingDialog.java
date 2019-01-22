@@ -31,6 +31,10 @@ public class LoadingDialog {
     private TextView mCancelTv;
     private TextView mTitleTv;
 
+    public AlertDialog getDialog() {
+        return mDialog;
+    }
+
     public LoadingDialog(Context context) {
         this.mContext = context;
     }
