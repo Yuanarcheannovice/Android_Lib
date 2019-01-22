@@ -2,6 +2,7 @@ package com.archeanx.lib.util;
 
 import android.content.Context;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.File;
 
@@ -169,6 +170,21 @@ public class AppPathManager {
                 for (File f : childFile) {
                     DeleteFileAndDir(f);
                 }
+            }
+        }
+    }
+
+
+    public static void deleteFile(String filePath) {
+        if (!TextUtils.isEmpty(filePath)) {
+            deleteFile(new File(filePath));
+        }
+    }
+
+    public static void deleteFile(File file) {
+        if (file != null) {
+            if (file.exists()) {
+                file.delete();
             }
         }
     }
