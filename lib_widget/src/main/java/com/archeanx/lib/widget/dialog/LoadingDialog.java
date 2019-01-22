@@ -55,11 +55,15 @@ public class LoadingDialog {
     }
 
     public LoadingDialog createLoadingDialog() {
+        return createLoadingDialog(false);
+    }
+
+    public LoadingDialog createLoadingDialog(boolean isCancel) {
         initView();
         // 创建对话
         mDialog = new AlertDialog.Builder(mContext).create();
         // 设置返回键失
-        mDialog.setCancelable(false);
+        mDialog.setCancelable(isCancel);
         mDialog.setCanceledOnTouchOutside(false);
         // 显示对话
         mDialog.show();
