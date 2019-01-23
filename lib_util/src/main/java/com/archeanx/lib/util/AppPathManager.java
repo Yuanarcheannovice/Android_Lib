@@ -175,14 +175,34 @@ public class AppPathManager {
     }
 
 
+    /**
+     * @param filePath 删除某个文件
+     */
     public static void deleteFile(String filePath) {
         if (!TextUtils.isEmpty(filePath)) {
             deleteFile(new File(filePath));
         }
     }
 
+    /**
+     * @param fileDirectoryPath 删除某个文件夹内所有文件
+     */
+    public static void deleteFiles(String fileDirectoryPath) {
+        if (!TextUtils.isEmpty(fileDirectoryPath)) {
+            File fileDirectory = new File(fileDirectoryPath);
+            if (fileDirectory.exists()) {
+                if (fileDirectory.isDirectory()) {
+                    for (File f : fileDirectory.listFiles()) {
+                        deleteFile(f);
+                    }
+                }
+            }
+        }
+    }
+
     public static void deleteFile(File file) {
         if (file != null) {
+
             if (file.exists()) {
                 file.delete();
             }
