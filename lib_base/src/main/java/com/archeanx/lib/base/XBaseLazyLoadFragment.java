@@ -3,6 +3,7 @@ package com.archeanx.lib.base;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,15 +28,15 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     /**
      * 数据加载方式是否被调用
      */
-    private boolean isLoadData = false;
+    protected boolean isLoadData = false;
 
-    private View mContentView;
+    protected View mContentView;
 
     protected final String HTTP_TAG = this.getClass().getSimpleName();
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mContentView = inflater.inflate(getContentView(), container, false);
         initView(mContentView);
@@ -57,6 +58,7 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
         this.isShowFragment = isVisibleToUser;
         xLoadData();
     }
+
 
     @Override
     public void onDestroyView() {
@@ -90,8 +92,10 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
 
     /**
      * 加载数据
+     *
      */
     protected abstract void lazyLoadData();
+
 
     /**
      * 绑定控件
