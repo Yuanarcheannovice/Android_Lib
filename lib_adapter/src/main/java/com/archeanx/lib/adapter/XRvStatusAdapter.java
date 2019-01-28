@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
@@ -123,6 +124,24 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             mDatas.add(initStatusLayout());
             mStatusTip = "加载失败,请检查网络!";
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 显示加载错误
+     */
+    public void showFailuer(boolean error, String msg) {
+        isError = error;
+        if (error) {
+            if (mDatas == null) {
+                mDatas = new ArrayList<>();
+            }
+            if (mDatas.size() > 0) {
+                mDatas.clear();
+            }
+            mDatas.add(initStatusLayout());
+            mStatusTip = msg == null ? "加载失败,请稍后重试" : msg;
             notifyDataSetChanged();
         }
     }
