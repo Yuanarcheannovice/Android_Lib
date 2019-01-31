@@ -31,9 +31,8 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${supportVersion}"
 
     //okhttph鸿洋的封装(https://github.com/hongyangAndroid/okhttputils)
-    api 'com.zhy:okhttputils:2.6.2'
-    api 'com.google.code.gson:gson:2.8.2'
-    api 'com.alibaba:fastjson:1.2.51'
+    implementation 'com.zhy:okhttputils:2.6.2'
+
 }
 
 //上传github 作为maven仓库
