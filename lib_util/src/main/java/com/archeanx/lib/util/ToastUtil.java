@@ -49,6 +49,10 @@ public class ToastUtil {
     }
 
     private void toast(String str) {
+        toast(str, false);
+    }
+
+    private void toast(String str, boolean isLong) {
         if (mContext == null) {
             throw new RuntimeException("Please init the Context before showToast");
         }
@@ -64,14 +68,23 @@ public class ToastUtil {
         if (TextUtils.equals(sOldmsg, str)) {
             if (sTwoTime - sOneTime > Toast.LENGTH_SHORT) {
                 sToast.setText(str);
+                sToast.setDuration(isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
                 sToast.show();
             }
         } else {
             sOldmsg = str;
             sToast.setText(str);
+            sToast.setDuration(isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
             sToast.show();
         }
+
         sOneTime = sTwoTime;
+    }
+
+    private void showLongStr(String str) {
+        if (!TextUtils.isEmpty(str)) {
+            toast(str,true);
+        }
     }
 
 
@@ -98,7 +111,7 @@ public class ToastUtil {
         toast(mContext.getResources().getString(resId));
     }
 
-    public static void showThread(String str){
+    public static void showThread(String str) {
         getInstance().showToThread(str);
     }
 
