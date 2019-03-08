@@ -120,6 +120,10 @@ public class ToastUtil {
         getInstance().showStr(str);
     }
 
+    public static void showLong(String str) {
+        getInstance().showStr(str);
+    }
+
     public static void show(@StringRes int resId) {
         getInstance().showStr(resId);
     }
