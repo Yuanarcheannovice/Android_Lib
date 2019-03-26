@@ -1,12 +1,10 @@
 package com.archeanx.lib.adapter;
 
 import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
@@ -65,6 +63,14 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      */
     protected int getStatusProgressHeight() {
         return 0;
+    }
+
+    /**
+     * 设置加载样式 不填充屏幕
+     * dp
+     */
+    protected boolean getStatusLayoutIsMatch() {
+        return false;
     }
 
     /**
@@ -201,7 +207,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     @Override
     public final int getItemLayout(int viewType) {
         if (viewType == ITEM_STATUS) {
-            return R.layout.item_adapter_other;
+            return getStatusLayoutIsMatch() ? R.layout.adapter_item_adapter_other : R.layout.adapter_item_adapter_other_wrap;
         }
         return getItemLayoutToStatus(viewType);
     }
