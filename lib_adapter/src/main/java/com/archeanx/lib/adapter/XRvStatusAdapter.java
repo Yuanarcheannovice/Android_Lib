@@ -66,11 +66,11 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     }
 
     /**
-     * 设置加载样式 不填充屏幕
-     * dp
+     * 设置加载样式 是否填充屏幕
+     * [true-填充]
      */
     protected boolean getStatusLayoutIsMatch() {
-        return false;
+        return true;
     }
 
     /**
