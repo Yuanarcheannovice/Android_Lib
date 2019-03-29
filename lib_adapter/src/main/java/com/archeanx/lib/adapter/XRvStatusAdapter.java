@@ -201,7 +201,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             mDatas.add(initStatusLayout());
             mStatusTip = "加载失败,请检查网络!";
-            mStatusSubTip = "点击重试!";
+            mStatusSubTip = "";
             notifyDataSetChanged();
         } else {
             mItemStatusIndex = ITEM_STATUS_DEFAULT;
