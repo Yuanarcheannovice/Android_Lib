@@ -387,6 +387,13 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     }
 
     /**
+     * 设置对状态的监听
+     */
+    public void setOnStatusItemClickListener(OnStatusItemClickListener listener) {
+        this.mOnStatusItemClickListener = listener;
+    }
+
+    /**
      * 点击接口
      */
     public abstract class OnStatusItemClickListener {
