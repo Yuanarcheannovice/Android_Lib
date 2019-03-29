@@ -1,6 +1,5 @@
 package com.archeanx.lib.adapter;
 
-import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -69,6 +68,12 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      */
     private OnStatusItemClickListener mOnStatusItemClickListener;
 
+    /**
+     * 设置 加载数据为空状态时的副标题
+     */
+    private String getEmptyStatusSubTip() {
+        return "";
+    }
 
     /**
      * 设置主标题文字 颜色
@@ -171,6 +176,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             mDatas.add(initStatusLayout());
             mStatusTip = "暂无数据...";
+            mStatusSubTip = getEmptyStatusSubTip();
             notifyDataSetChanged();
         } else {
             mItemStatusIndex = ITEM_STATUS_DEFAULT;
@@ -396,7 +402,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     /**
      * 点击接口
      */
-    public abstract class OnStatusItemClickListener {
+    public static abstract class OnStatusItemClickListener {
         /**
          * 加载错误的点击
          */
