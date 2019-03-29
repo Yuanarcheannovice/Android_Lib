@@ -1,5 +1,6 @@
 package com.archeanx.lib.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -22,20 +23,55 @@ import java.util.List;
  */
 public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
 
-    private boolean isLoading = false;
+    /**
+     * 状态layout的 标识码
+     */
+    private static final int ITEM_STATUS = 9999999;
 
-    private boolean isEmpty = false;
+    /**
+     * 没有任何加载状态
+     */
+    private static final int ITEM_STATUS_DEFAULT = 0;
 
-    private boolean isError = false;
+    /**
+     * 加载中
+     */
+    private static final int ITEM_STATUS_LOADING = 1;
 
+    /**
+     * 加载数据为空
+     */
+    private static final int ITEM_STATUS_EMPTY = 2;
+
+    /**
+     * 加载错误
+     */
+    private static final int ITEM_STATUS_ERROR = 3;
+
+    /**
+     * 标记状态码
+     */
+    private int mItemStatusIndex = ITEM_STATUS_DEFAULT;
+
+    /**
+     * 标题
+     */
     private String mStatusTip = "";
 
-    private static final int ITEM_STATUS = 9999;
+    /**
+     * 副标题
+     */
+    private String mStatusSubTip = "";
 
 
     /**
-     * 设置状态文字 颜色
-     * resouce
+     * 加载事件点击
+     */
+    private OnStatusItemClickListener mOnStatusItemClickListener;
+
+
+    /**
+     * 设置主标题文字 颜色
      */
     @ColorInt
     protected int getStatusTextColor() {
@@ -43,10 +79,26 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     }
 
     /**
-     * 设置状态文字大小
+     * 设置副标题文字 颜色
+     * resouce
+     */
+    @ColorInt
+    protected int getStatusSubTextColor() {
+        return 0;
+    }
+
+    /**
+     * 设置主标题文字大小
      * dp
      */
     protected int getStatusTextSize() {
+        return 0;
+    }
+
+    /**
+     * 设置副标题文字大小
+     */
+    protected int getStatusSubTextSize() {
         return 0;
     }
 
@@ -85,8 +137,8 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      * 显示正在加载中
      */
     public void showLoading(boolean loading) {
-        isLoading = loading;
         if (loading) {
+            mItemStatusIndex = ITEM_STATUS_LOADING;
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
             }
@@ -96,6 +148,12 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             mDatas.add(initStatusLayout());
             mStatusTip = "加载中...";
             notifyDataSetChanged();
+        } else {
+            mItemStatusIndex = ITEM_STATUS_DEFAULT;
+            if (mDatas != null) {
+                mDatas.clear();
+                notifyDataSetChanged();
+            }
         }
     }
 
@@ -103,8 +161,8 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      * 显示数据为空
      */
     public void showEmpty(boolean empty) {
-        isEmpty = empty;
         if (empty) {
+            mItemStatusIndex = ITEM_STATUS_EMPTY;
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
             }
@@ -114,6 +172,12 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             mDatas.add(initStatusLayout());
             mStatusTip = "暂无数据...";
             notifyDataSetChanged();
+        } else {
+            mItemStatusIndex = ITEM_STATUS_DEFAULT;
+            if (mDatas != null) {
+                mDatas.clear();
+                notifyDataSetChanged();
+            }
         }
     }
 
@@ -121,8 +185,8 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      * 显示加载错误
      */
     public void showError(boolean error) {
-        isError = error;
         if (error) {
+            mItemStatusIndex = ITEM_STATUS_ERROR;
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
             }
@@ -131,16 +195,23 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             mDatas.add(initStatusLayout());
             mStatusTip = "加载失败,请检查网络!";
+            mStatusSubTip = "点击重试!";
             notifyDataSetChanged();
+        } else {
+            mItemStatusIndex = ITEM_STATUS_DEFAULT;
+            if (mDatas != null) {
+                mDatas.clear();
+                notifyDataSetChanged();
+            }
         }
     }
 
     /**
      * 显示加载错误
      */
-    public void showFailuer(boolean error, String msg) {
-        isError = error;
+    public void showError(boolean error, @NonNull String msg, @NonNull String subTitle) {
         if (error) {
+            mItemStatusIndex = ITEM_STATUS_ERROR;
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
             }
@@ -148,14 +219,21 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                 mDatas.clear();
             }
             mDatas.add(initStatusLayout());
-            mStatusTip = msg == null ? "加载失败,请稍后重试" : msg;
+            mStatusTip = msg;
+            mStatusSubTip = subTitle;
             notifyDataSetChanged();
+        } else {
+            mItemStatusIndex = ITEM_STATUS_DEFAULT;
+            if (mDatas != null) {
+                mDatas.clear();
+                notifyDataSetChanged();
+            }
         }
     }
 
     @Override
     public void setDatas(List<T> datas) {
-        resetStatus();
+        mItemStatusIndex = ITEM_STATUS_DEFAULT;
         super.setDatas(datas);
         if (mDatas.size() == 0) {
             showEmpty(true);
@@ -164,7 +242,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
 
     @Override
     public void setDatas(List<T> datas, boolean isRefresh) {
-        resetStatus();
+        mItemStatusIndex = ITEM_STATUS_DEFAULT;
         super.setDatas(datas, isRefresh);
         if (mDatas.size() == 0) {
             showEmpty(true);
@@ -173,38 +251,45 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
 
     @Override
     public void addData(T data, boolean isRefresh) {
-        resetStatus();
+        mItemStatusIndex = ITEM_STATUS_DEFAULT;
         super.addData(data, isRefresh);
     }
 
     @Override
     public void addDatas(List<T> data, boolean isRefresh) {
-        resetStatus();
+        mItemStatusIndex = ITEM_STATUS_DEFAULT;
         super.addDatas(data, isRefresh);
     }
 
-    private void resetStatus() {
-        isEmpty = false;
-        isLoading = false;
-        isError = false;
-    }
 
     @Override
     public final int getItemViewType(int position) {
-        if (isLoading || isEmpty || isError) {
+        if (mItemStatusIndex == ITEM_STATUS_ERROR || mItemStatusIndex == ITEM_STATUS_EMPTY || mItemStatusIndex == ITEM_STATUS_LOADING) {
             return ITEM_STATUS;
         }
-        return getItemViewTypeToStaus(position);
+        return getItemViewTypeToStatus(position);
     }
 
-    public int getItemViewTypeToStaus(int position) {
+    public int getItemViewTypeToStatus(int position) {
         return 0;
     }
 
     @Override
     public final int getItemLayout(int viewType) {
         if (viewType == ITEM_STATUS) {
-            return getStatusLayoutIsMatch() ? R.layout.adapter_item_adapter_other : R.layout.adapter_item_adapter_other_wrap;
+            if (getStatusLayoutIsMatch()) {
+                //这里不允许布局 被监听点击事件，本类自己处理点击事件
+                addNoClickLayout(R.layout.adapter_item_adapter_other);
+                addNoFocusableLayout(R.layout.adapter_item_adapter_other);
+                addNoLongClickLayout(R.layout.adapter_item_adapter_other);
+                return R.layout.adapter_item_adapter_other;
+            } else {
+                //这里不允许布局 被监听点击事件，本类自己处理点击事件
+                addNoClickLayout(R.layout.adapter_item_adapter_other_wrap);
+                addNoFocusableLayout(R.layout.adapter_item_adapter_other_wrap);
+                addNoLongClickLayout(R.layout.adapter_item_adapter_other_wrap);
+                return R.layout.adapter_item_adapter_other_wrap;
+            }
         }
         return getItemLayoutToStatus(viewType);
     }
@@ -226,20 +311,44 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                 layoutParams.width = getStatusProgressWidth();
                 progressBar.setLayoutParams(layoutParams);
             }
-            holder.setText(R.id.ie_tv, mStatusTip);
+            holder.setText(R.id.ie_title, mStatusTip);
+            holder.setText(R.id.ie_sub_title, mStatusSubTip);
 
-            if (isLoading) {
+            if (mItemStatusIndex == ITEM_STATUS_LOADING) {
                 progressBar.setVisibility(View.VISIBLE);
             } else {
                 progressBar.setVisibility(View.INVISIBLE);
             }
 
             if (getStatusTextColor() != 0) {
-                holder.setTextColor(R.id.ie_tv, getStatusTextColor());
+                holder.setTextColor(R.id.ie_title, getStatusTextColor());
             }
             if (getStatusTextSize() > 0) {
-                holder.setTextSize(R.id.ie_tv, getStatusTextSize());
+                holder.setTextSize(R.id.ie_title, getStatusTextSize());
             }
+
+            if (getStatusSubTextColor() != 0) {
+                holder.setTextColor(R.id.ie_sub_title, getStatusTextColor());
+            }
+            if (getStatusSubTextSize() > 0) {
+                holder.setTextSize(R.id.ie_sub_title, getStatusTextSize());
+            }
+            if (mOnStatusItemClickListener != null) {
+                //这里单独处理点击事件
+                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mItemStatusIndex == ITEM_STATUS_LOADING) {
+                            mOnStatusItemClickListener.onStatusLoadingClick();
+                        } else if (mItemStatusIndex == ITEM_STATUS_EMPTY) {
+                            mOnStatusItemClickListener.onStatusEmptyClick();
+                        } else if (mItemStatusIndex == ITEM_STATUS_ERROR) {
+                            mOnStatusItemClickListener.onStatusErrorClick();
+                        }
+                    }
+                });
+            }
+
         } else {
             onBindViewHolderToStatus(holder, position);
         }
@@ -257,7 +366,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         XRvWrapperUtils.onAttachedToRecyclerView(recyclerView, new XRvWrapperUtils.SpanSizeCallback() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, GridLayoutManager.SpanSizeLookup oldLookup, int position) {
-                if (isEmpty || isError || isLoading) {
+                if (mItemStatusIndex == ITEM_STATUS_ERROR || mItemStatusIndex == ITEM_STATUS_EMPTY || mItemStatusIndex == ITEM_STATUS_LOADING) {
                     return gridLayoutManager.getSpanCount();
                 }
                 if (oldLookup != null) {
@@ -268,11 +377,36 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         });
     }
 
+
     @Override
     public void onViewAttachedToWindow(@NonNull XRvViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if (isEmpty || isError || isLoading) {
+        if (mItemStatusIndex == ITEM_STATUS_ERROR || mItemStatusIndex == ITEM_STATUS_EMPTY || mItemStatusIndex == ITEM_STATUS_LOADING) {
             XRvWrapperUtils.setFullSpan(holder);
+        }
+    }
+
+    /**
+     * 点击接口
+     */
+    public abstract class OnStatusItemClickListener {
+        /**
+         * 加载错误的点击
+         */
+        public abstract void onStatusErrorClick();
+
+        /**
+         * 加载 数据为空的点击
+         */
+        public void onStatusEmptyClick() {
+
+        }
+
+        /**
+         * 加载中的点击
+         */
+        public void onStatusLoadingClick() {
+
         }
     }
 

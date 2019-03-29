@@ -3,10 +3,9 @@ package com.archeanx.lib.adapter;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArrayMap;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.archeanx.lib.adapter.xutil.XRvViewHolder;
 
 
@@ -19,19 +18,19 @@ import com.archeanx.lib.adapter.xutil.XRvViewHolder;
  * 纯净版的adapter(没有head，footer，多layout控制 数据控制，只有点击事件)
  */
 public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder> {
+
     /**
      * 设置某些layout不能点击
      */
-    private ArrayMap<Integer, Boolean> mClickStatus = new ArrayMap<>();
+    protected final SparseArray<Integer> mNoClickLayoutList = new SparseArray<>();
     /**
      * 设置某些layout不能长按
      */
-    private ArrayMap<Integer, Boolean> mLongClickStatus = new ArrayMap<>();
+    protected final SparseArray<Integer> mNoLongClickLayoutList = new SparseArray<>();
     /**
      * 设置某些layout不能选中
      */
-    private ArrayMap<Integer, Boolean> mFocusableStatus = new ArrayMap<>();
-
+    protected final SparseArray<Integer> mNoFocusableLayoutList = new SparseArray<>();
     /**
      * 点击事件
      */
@@ -47,33 +46,15 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
      */
     protected OnItemFocusableListener mOnItemFocusableListener;
 
-    /**
-     * 添加不能点击item layout
-     */
-    public void addNoClickLayout(@LayoutRes int layout) {
-        mClickStatus.put(layout, false);
-    }
-
-    /**
-     * 添加不能长按的item layout
-     */
-    public void addNoLongClickLayout(@LayoutRes int layout) {
-        mLongClickStatus.put(layout, false);
-    }
-
-    /**
-     * 添加没有焦点 事件 的 item layout
-     */
-    public void addNoFocusableLayout(@LayoutRes int layout) {
-        mFocusableStatus.put(layout, false);
-    }
 
     @NonNull
     @Override
     public XRvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         final XRvViewHolder viewHolder = XRvViewHolder.createViewHolder(parent.getContext(), parent, getItemLayout(viewType));
         if (mOnItemClickListener != null) {
-            if (null != mClickStatus.get(getItemLayout(viewType)) && mClickStatus.get(getItemLayout(viewType))) {
+            //判断点击事件
+            if (mNoClickLayoutList.get(getItemLayout(viewType)) == null) {
                 viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -84,7 +65,7 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
             }
         }
         if (mOnItemLongClickListener != null) {
-            if (null != mLongClickStatus.get(getItemLayout(viewType)) && mLongClickStatus.get(getItemLayout(viewType))) {
+            if (mNoLongClickLayoutList.get(getItemLayout(viewType)) == null) {
                 viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -95,7 +76,7 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
             }
         }
         if (mOnItemFocusableListener != null) {
-            if (null != mFocusableStatus.get(getItemLayout(viewType)) && mFocusableStatus.get(getItemLayout(viewType))) {
+            if (mNoFocusableLayoutList.get(getItemLayout(viewType)) == null) {
                 //todo 焦点事件，会触发两次，一次是item离开的时候，一次是item被进入的时候，
                 viewHolder.getConvertView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
@@ -115,7 +96,29 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
      * @param viewType 类型
      */
     @LayoutRes
-    public abstract int getItemLayout(int viewType);
+    protected abstract int getItemLayout(int viewType);
+
+
+    /**
+     * 添加不能点击item layout
+     */
+    protected void addNoClickLayout(@LayoutRes int layout) {
+        mNoClickLayoutList.put(layout, layout);
+    }
+
+    /**
+     * 添加不能长按的item layout
+     */
+    protected void addNoLongClickLayout(@LayoutRes int layout) {
+        mNoLongClickLayoutList.put(layout, layout);
+    }
+
+    /**
+     * 添加没有焦点 事件 的 item layout
+     */
+    protected void addNoFocusableLayout(@LayoutRes int layout) {
+        mNoFocusableLayoutList.put(layout, layout);
+    }
 
     /**
      * 点击接口

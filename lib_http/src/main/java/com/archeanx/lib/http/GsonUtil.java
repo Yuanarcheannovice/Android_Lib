@@ -18,7 +18,7 @@ public class GsonUtil {
     private static final JsonParser PARSER = new JsonParser();
 
     private GsonUtil() {
-    	
+
     }
 
     public static Gson getGSON() {
@@ -33,7 +33,7 @@ public class GsonUtil {
             return null;
         }
     }
-     
+
     public static Object jsonStringToObject(String jsonStr, Type type) {
         try {
             return GSON.fromJson(jsonStr, type);
@@ -42,7 +42,7 @@ public class GsonUtil {
             return null;
         }
     }
- 
+
     public static <T> List<T> jsonArrayStringToList(String jsonArrayStr, Class<T> elementCls) {
         List<T> result = new ArrayList<T>();
         try {
@@ -55,10 +55,10 @@ public class GsonUtil {
         }
         return result;
     }
- 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public static List jsonArrayStringToList(String jsonArrayStr, Type type) {
-		List result = new ArrayList();
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static List jsonArrayStringToList(String jsonArrayStr, Type type) {
+        List result = new ArrayList();
         try {
             JsonArray array = stringToJsonArray(jsonArrayStr);
             for (JsonElement element : array) {
@@ -69,7 +69,7 @@ public class GsonUtil {
         }
         return result;
     }
- 
+
     public static String objectToJsonString(Object obj) {
         try {
             return GSON.toJson(obj);
@@ -78,9 +78,10 @@ public class GsonUtil {
             return null;
         }
     }
- 
+
     public static <T> String listToJsonArrayString(List<T> list) {
-        Type type = new TypeToken<List<T>>(){ }.getType();	//SUPPRESS CHECKSTYLE
+        Type type = new TypeToken<List<T>>() {
+        }.getType();    //SUPPRESS CHECKSTYLE
         try {
             return GSON.toJson(list, type);
         } catch (Exception e) {
@@ -89,7 +90,7 @@ public class GsonUtil {
         }
     }
 
-     
+
     public static JsonObject stringToJson(String str) {
         try {
             return PARSER.parse(str).getAsJsonObject();
@@ -98,7 +99,7 @@ public class GsonUtil {
             return null;
         }
     }
- 
+
     public static JsonArray stringToJsonArray(String str) {
         try {
             return PARSER.parse(str).getAsJsonArray();
@@ -107,11 +108,11 @@ public class GsonUtil {
             return null;
         }
     }
- 
+
     public static String jsonToString(JsonObject jsonObject) {
         return jsonObject.toString();
     }
- 
+
     public static String jsonArrayToString(JsonArray jsonArray) {
         return jsonArray.toString();
     }

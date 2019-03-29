@@ -32,7 +32,7 @@ dependencies {
 
     //okhttph鸿洋的封装(https://github.com/hongyangAndroid/okhttputils)
     implementation 'com.zhy:okhttputils:2.6.2'
-
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 //上传github 作为maven仓库
