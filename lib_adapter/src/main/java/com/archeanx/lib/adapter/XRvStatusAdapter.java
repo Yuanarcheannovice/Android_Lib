@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
@@ -230,6 +231,13 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                 progressBar.setLayoutParams(layoutParams);
             }
             holder.setText(R.id.ie_tv, mStatusTip);
+
+            if(isLoading){
+                progressBar.setVisibility(View.VISIBLE);
+            }else{
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
             if (getStatusTextColor() != 0) {
                 holder.setTextColor(R.id.ie_tv, getStatusTextColor());
             }
