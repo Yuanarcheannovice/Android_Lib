@@ -155,9 +155,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
 
     @Override
     public void setDatas(List<T> datas) {
-        if (datas != null && datas.size() > 0) {
-            resetStatus();
-        }
+        resetStatus();
         super.setDatas(datas);
         if (mDatas.size() == 0) {
             showEmpty(true);
@@ -166,9 +164,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
 
     @Override
     public void setDatas(List<T> datas, boolean isRefresh) {
-        if (datas != null && datas.size() > 0) {
-            resetStatus();
-        }
+        resetStatus();
         super.setDatas(datas, isRefresh);
         if (mDatas.size() == 0) {
             showEmpty(true);
@@ -232,9 +228,9 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             holder.setText(R.id.ie_tv, mStatusTip);
 
-            if(isLoading){
+            if (isLoading) {
                 progressBar.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 progressBar.setVisibility(View.INVISIBLE);
             }
 
