@@ -152,6 +152,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             mDatas.add(initStatusLayout());
             mStatusTip = "加载中...";
+            mStatusSubTip="";
             notifyDataSetChanged();
         } else {
             mItemStatusIndex = ITEM_STATUS_DEFAULT;
