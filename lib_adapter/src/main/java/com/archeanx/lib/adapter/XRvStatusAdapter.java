@@ -152,7 +152,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
             }
             mDatas.add(initStatusLayout());
             mStatusTip = "加载中...";
-            mStatusSubTip="";
+            mStatusSubTip = "";
             notifyDataSetChanged();
         } else {
             mItemStatusIndex = ITEM_STATUS_DEFAULT;
@@ -286,15 +286,11 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         if (viewType == ITEM_STATUS) {
             if (getStatusLayoutIsMatch()) {
                 //这里不允许布局 被监听点击事件，本类自己处理点击事件
-                addNoClickLayout(R.layout.adapter_item_adapter_other);
-                addNoFocusableLayout(R.layout.adapter_item_adapter_other);
-                addNoLongClickLayout(R.layout.adapter_item_adapter_other);
+                addNoListenerLayout(R.layout.adapter_item_adapter_other);
                 return R.layout.adapter_item_adapter_other;
             } else {
                 //这里不允许布局 被监听点击事件，本类自己处理点击事件
-                addNoClickLayout(R.layout.adapter_item_adapter_other_wrap);
-                addNoFocusableLayout(R.layout.adapter_item_adapter_other_wrap);
-                addNoLongClickLayout(R.layout.adapter_item_adapter_other_wrap);
+                addNoListenerLayout(R.layout.adapter_item_adapter_other_wrap);
                 return R.layout.adapter_item_adapter_other_wrap;
             }
         }
