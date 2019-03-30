@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.archeanx.lib.adapter.xutil.XRvViewHolder;
 
 
@@ -117,6 +118,15 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
      * 添加没有焦点 事件 的 item layout
      */
     protected void addNoFocusableLayout(@LayoutRes int layout) {
+        mNoFocusableLayoutList.put(layout, layout);
+    }
+
+    /**
+     * 添加 没有点击 长按 焦点 事件的layout
+     */
+    protected void addNoListenerLayout(@LayoutRes int layout) {
+        mNoClickLayoutList.put(layout, layout);
+        mNoLongClickLayoutList.put(layout, layout);
         mNoFocusableLayoutList.put(layout, layout);
     }
 
