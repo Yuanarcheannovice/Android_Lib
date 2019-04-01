@@ -191,33 +191,23 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     /**
      * 显示加载错误
      */
-    public void showError(boolean error) {
-        if (error) {
-            mItemStatusIndex = ITEM_STATUS_ERROR;
-            if (mDatas == null) {
-                mDatas = new ArrayList<>();
-            }
-            if (mDatas.size() > 0) {
-                mDatas.clear();
-            }
-            mDatas.add(initStatusLayout());
-            mStatusTip = "加载失败,请检查网络!";
-            mStatusSubTip = "";
-            notifyDataSetChanged();
-        } else {
-            mItemStatusIndex = ITEM_STATUS_DEFAULT;
-            if (mDatas != null) {
-                mDatas.clear();
-                notifyDataSetChanged();
-            }
-        }
+    public void showError(boolean isShow) {
+       showError(isShow,"加载失败,请检查网络!");
+    }
+
+
+    /**
+     * 显示加载错误
+     */
+    public void showError(boolean isShow,String msg) {
+        showError(isShow,msg,"");
     }
 
     /**
      * 显示加载错误
      */
-    public void showError(boolean error, @NonNull String msg, @NonNull String subTitle) {
-        if (error) {
+    public void showError(boolean isShow, @NonNull String msg, @NonNull String subTitle) {
+        if (isShow) {
             mItemStatusIndex = ITEM_STATUS_ERROR;
             if (mDatas == null) {
                 mDatas = new ArrayList<>();
