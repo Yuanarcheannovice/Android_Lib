@@ -71,7 +71,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     /**
      * 设置 加载数据为空状态时的副标题
      */
-    private String getEmptyStatusSubTip() {
+    protected String getEmptyStatusSubTip() {
         return "";
     }
 
@@ -163,10 +163,19 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         }
     }
 
+
+
     /**
      * 显示数据为空
      */
     public void showEmpty(boolean empty) {
+        showEmpty(empty,"暂无数据...");
+    }
+
+    /**
+     * 显示数据为空
+     */
+    public void showEmpty(boolean empty,String emtyStr) {
         if (empty) {
             mItemStatusIndex = ITEM_STATUS_EMPTY;
             if (mDatas == null) {
@@ -176,7 +185,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                 mDatas.clear();
             }
             mDatas.add(initStatusLayout());
-            mStatusTip = "暂无数据...";
+            mStatusTip = emtyStr;
             mStatusSubTip = getEmptyStatusSubTip();
             notifyDataSetChanged();
         } else {
