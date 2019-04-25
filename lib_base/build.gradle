@@ -5,8 +5,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.0.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -28,6 +28,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation "com.android.support:appcompat-v7:${supportVersion}"
+    implementation "com.android.support:support-v4:${supportVersion}"
 }
 
 //上传github 作为maven仓库
@@ -53,7 +54,8 @@ tasks.withType(JavaCompile) {
 // 打包源码
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+//    getArchiveClassifier().set('sources')
+    classifier ='sources'
 }
 
 task javadoc(type: Javadoc) {
@@ -61,10 +63,12 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
+    options.encoding = "UTF-8"
 }
 
-// 制作文档(Javadoc)
+// 制作文档(Javadoc)ArchiveClassifier
 task javadocJar(type: Jar, dependsOn: javadoc) {
+//    getArchiveClassifier().set('javadoc')
     classifier = 'javadoc'
     from javadoc.destinationDir
 }

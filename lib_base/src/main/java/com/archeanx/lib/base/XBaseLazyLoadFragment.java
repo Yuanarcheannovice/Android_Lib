@@ -33,7 +33,6 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     protected View mContentView;
 
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -68,12 +67,22 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        super.onDestroyView();
+
+        if (null != mContentView) {
+            ((ViewGroup) mContentView.getParent()).removeView(mContentView);
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
         isLoadData = false;
         isShowFragment = false;
         isCreateView = false;
         closeFragment();
         mContentView = null;
-        super.onDestroyView();
+        super.onDestroy();
     }
 
     /**
@@ -104,6 +113,7 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
 
     /**
      * 绑定控件
+     * @return view的实例
      */
     protected <T extends View> T find(@IdRes int resId) {
         return (T) mContentView.findViewById(resId);

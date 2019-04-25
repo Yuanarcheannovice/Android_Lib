@@ -14,7 +14,7 @@ import com.archeanx.lib.adapter.xutil.XRvViewHolder;
  * 一个简单封装了，Rl点击事件的类，
  *
  * @author xz
- * @date 2016/8/15 0015
+ *  2016/8/15 0015
  * <p>
  * 纯净版的adapter(没有head，footer，多layout控制 数据控制，只有点击事件)
  */

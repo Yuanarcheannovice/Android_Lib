@@ -61,6 +61,7 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
+    options.encoding = "UTF-8"
 }
 
 // 制作文档(Javadoc)

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author xz
- * @date 2017/7/27 0027
+ *  2017/7/27 0027
  * 增加了纯净Adapter，的数据操作
  * <p>
  * 因为有些时候可是使用的map集合，所以改用继承来写数据操作，不合并到 RvPureAdapte中
