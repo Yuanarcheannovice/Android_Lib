@@ -32,14 +32,20 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
 
     protected View mContentView;
 
-    protected final String HTTP_TAG = this.getClass().getSimpleName();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mContentView = inflater.inflate(getContentView(), container, false);
-        initView(mContentView);
+        if(null!=mContentView){
+            ViewGroup parent = (ViewGroup) mContentView.getParent();
+            if (null != parent) {
+                parent.removeView(mContentView);
+            }
+        }else{
+            mContentView = inflater.inflate(getContentView(), container, false);
+            initView(mContentView);
+        }
         return mContentView;
     }
 
@@ -86,7 +92,6 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     /**
      * 初始view
      *
-     * @param view
      */
     protected abstract void initView(View view);
 

@@ -3,6 +3,7 @@ package com.archeanx.lib.base;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,10 +13,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by xz on 2017/6/30 0030.
- * <p>
- * 一般使用的fragment，配合FragmentTransition使用
- * <p>
- * fragment的显示隐藏，如果触发了onResume，则不会触发onHiddenChanged的显示;
+ * 基础的fragment
  */
 
 public abstract class XBaseFragment extends Fragment {
@@ -26,14 +24,20 @@ public abstract class XBaseFragment extends Fragment {
 
     private View mContentView;
 
-    protected final String TAG = this.getClass().getSimpleName();
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mContentView = inflater.inflate(getContentView(), container, false);
-        initView(mContentView);
+        if (null != mContentView) {
+            ViewGroup parent = (ViewGroup) mContentView.getParent();
+            if (null != parent) {
+                parent.removeView(mContentView);
+            }
+        } else {
+//            mContentView = inflater.inflate(getContentView(), null);
+            mContentView = inflater.inflate(getContentView(), container, false);
+            initView(mContentView);
+        }
         return mContentView;
     }
 
