@@ -18,6 +18,11 @@ public abstract class XBaseActivity extends AppCompatActivity {
 
     protected GestureDetector gestureDetector;
 
+    /**
+     * 是否关闭
+     */
+    private boolean isClose = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onActivityInit();
@@ -43,6 +48,7 @@ public abstract class XBaseActivity extends AppCompatActivity {
     protected abstract int onSetContentView(Bundle savedInstanceState);
 
     /**
+     *
      */
     protected abstract void onInitView();//初始化View
 
@@ -64,17 +70,33 @@ public abstract class XBaseActivity extends AppCompatActivity {
     protected abstract void onCloseActivity();
 
     @Override
+    protected void onPause() {
+        if (isFinishing() && !isClose) {
+            isClose = true;
+            onCloseActivity();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if (isFinishing() && !isClose) {
+            isClose = true;
+            onCloseActivity();
+        }
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         XAppActivityManager.getInstance().removeActivity(this);
-        onCloseActivity();
         super.onDestroy();
     }
 
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(gestureDetector!=null) {
+        if (gestureDetector != null) {
             gestureDetector.onTouchEvent(event);
         }
         return super.onTouchEvent(event);
@@ -84,7 +106,7 @@ public abstract class XBaseActivity extends AppCompatActivity {
      * 右滑关闭Activity
      */
     public void onSlidingListener() {
-         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1 != null && e2 != null) {
