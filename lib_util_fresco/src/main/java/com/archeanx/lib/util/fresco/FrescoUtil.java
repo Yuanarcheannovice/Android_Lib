@@ -44,6 +44,10 @@ public class FrescoUtil {
         return Uri.parse("asset:///ico-image/" + imageName).toString();
     }
 
+    public static Uri getShowAssetsUri(String imageName) {
+        return Uri.parse("asset:///ico-image/" + imageName);
+    }
+
     /**
      * 显示 assets的图片
      *

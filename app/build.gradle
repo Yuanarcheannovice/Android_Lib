@@ -29,4 +29,6 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:${constraintLayout}"
     implementation 'com.archeanx.android:lib_tv_vlc:1.0.4'
     implementation project(':lib_adapter')
+    implementation project(':lib_util')
+    implementation project(':lib_widget')
 }
