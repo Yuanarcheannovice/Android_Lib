@@ -345,7 +345,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                         } else if (mItemStatusIndex == ITEM_STATUS_EMPTY) {
                             mOnStatusItemClickListener.onStatusEmptyClick();
                         } else if (mItemStatusIndex == ITEM_STATUS_ERROR) {
-                            mOnStatusItemClickListener.onStatusErrorClick();
+                            mOnStatusItemClickListener.onStatusErrorClick(mStatusTip,mStatusSubTip);
                         }
                     }
                 });
@@ -402,7 +402,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         /**
          * 加载错误的点击
          */
-        public abstract void onStatusErrorClick();
+        public abstract void onStatusErrorClick(String statusTip,String subStatusTip);
 
         /**
          * 加载 数据为空的点击
