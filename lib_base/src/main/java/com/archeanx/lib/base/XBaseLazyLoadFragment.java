@@ -171,6 +171,7 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
             if (child instanceof XBaseLazyLoadFragment) {
                 if (!isVisibleToUser && child.getUserVisibleHint()) {
                     childFragment = child;
+                    childFragment.setUserVisibleHint(false);
                 } else if (isVisibleToUser && childFragment != null && !childFragment.getUserVisibleHint()) {
                     childFragment.setUserVisibleHint(true);
                     childFragment = null;
