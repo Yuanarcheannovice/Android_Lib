@@ -63,7 +63,7 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isCreateView && isShowFragment && isLoadData) {
+        if (isCreateView && isLoadData) {
             dispatchSetUserVisibleHint(isVisibleToUser);
         }
         this.isShowFragment = isVisibleToUser;
