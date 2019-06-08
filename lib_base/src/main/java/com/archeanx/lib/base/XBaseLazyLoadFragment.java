@@ -6,9 +6,12 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * @author xz
@@ -36,12 +39,12 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if(null!=mContentView){
+        if (null != mContentView) {
             ViewGroup parent = (ViewGroup) mContentView.getParent();
             if (null != parent) {
                 parent.removeView(mContentView);
             }
-        }else{
+        } else {
             mContentView = inflater.inflate(getContentView(), container, false);
             initView(mContentView);
         }
@@ -60,6 +63,7 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        dispatchSetUserVisibleHint(isVisibleToUser);
         this.isShowFragment = isVisibleToUser;
         xLoadData();
     }
@@ -100,19 +104,18 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
 
     /**
      * 初始view
-     *
      */
     protected abstract void initView(View view);
 
     /**
      * 加载数据
-     *
      */
     protected abstract void lazyLoadData();
 
 
     /**
      * 绑定控件
+     *
      * @return view的实例
      */
     protected <T extends View> T find(@IdRes int resId) {
@@ -125,30 +128,52 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     protected abstract void closeFragment();
 
 
-//    /**
-//     * ViewPager场景下，判断父fragment是否可见
-//     *
-//     * @return
-//     */
-//    private boolean isParentVisible() {
-//        Fragment fragment = getParentFragment();
-//        return fragment == null || (fragment instanceof LazyLoadFragment && ((LazyLoadFragment) fragment).isVisibleToUser);
-//    }
+    /**
+     * ViewPager场景下，判断父fragment是否可见
+     *
+     * @return
+     */
+    protected boolean isParentVisible() {
+        Fragment fragment = getParentFragment();
+        return fragment == null || (fragment instanceof XBaseLazyLoadFragment && ((XBaseLazyLoadFragment) fragment).isShowFragment);
+    }
 
-//    /**
-//     * ViewPager场景下，当前fragment可见，如果其子fragment也可见，则尝试让子fragment请求数据
-//     */
-//    private void dispatchParentVisibleState() {
-//        FragmentManager fragmentManager = getChildFragmentManager();
-//        List<Fragment> fragments = fragmentManager.getFragments();
-//        if (fragments.isEmpty()) {
-//            return;
-//        }
-//        for (Fragment child : fragments) {
-//            if (child instanceof LazyLoadFragment && ((LazyLoadFragment) child).isVisibleToUser) {
-//                ((LazyLoadFragment) child).tryLoadData();
-//            }
-//        }
-//    }
+    /**
+     * ViewPager场景下，当前fragment可见，如果其子fragment也可见，则尝试让子fragment请求数据
+     */
+    protected void dispatchParentVisibleState() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments.isEmpty()) {
+            return;
+        }
+        for (Fragment child : fragments) {
+            if (child instanceof XBaseLazyLoadFragment && ((XBaseLazyLoadFragment) child).isShowFragment) {
+                ((XBaseLazyLoadFragment) child).xLoadData();
+            }
+        }
+    }
 
+    private Fragment childFragment;
+
+    /**
+     * ViewPager场景下，当前fragment可见，如果其子fragment也可见，则尝试让子fragmentSetUserVisibleHint
+     */
+    protected void dispatchSetUserVisibleHint(boolean isVisibleToUser) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments.isEmpty()) {
+            return;
+        }
+        for (Fragment child : fragments) {
+            if (child instanceof XBaseLazyLoadFragment) {
+                if (!isVisibleToUser && child.getUserVisibleHint()) {
+                    childFragment = child;
+                } else if (isVisibleToUser && childFragment != null && !childFragment.getUserVisibleHint()) {
+                    childFragment.setUserVisibleHint(true);
+                    childFragment=null;
+                }
+            }
+        }
+    }
 }
