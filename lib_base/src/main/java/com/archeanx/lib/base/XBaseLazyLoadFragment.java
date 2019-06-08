@@ -63,7 +63,9 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        dispatchSetUserVisibleHint(isVisibleToUser);
+        if (isCreateView && isShowFragment && isLoadData) {
+            dispatchSetUserVisibleHint(isVisibleToUser);
+        }
         this.isShowFragment = isVisibleToUser;
         xLoadData();
     }
@@ -171,7 +173,7 @@ public abstract class XBaseLazyLoadFragment extends Fragment {
                     childFragment = child;
                 } else if (isVisibleToUser && childFragment != null && !childFragment.getUserVisibleHint()) {
                     childFragment.setUserVisibleHint(true);
-                    childFragment=null;
+                    childFragment = null;
                 }
             }
         }
