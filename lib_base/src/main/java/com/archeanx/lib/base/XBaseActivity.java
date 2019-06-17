@@ -48,19 +48,19 @@ public abstract class XBaseActivity extends AppCompatActivity {
     protected abstract int onSetContentView(Bundle savedInstanceState);
 
     /**
-     *
+     * 初始化View
      */
-    protected abstract void onInitView();//初始化View
+    protected abstract void onInitView();
 
     /**
      * 设置监听
      */
-    protected abstract void onSetListener();//监听
+    protected abstract void onSetListener();
 
     /**
-     * 开始运行
+     * 开始数据
      */
-    protected abstract void onInitData();//开始数据
+    protected abstract void onInitData();
 
     /**
      * 方法说明:手动释放内存
