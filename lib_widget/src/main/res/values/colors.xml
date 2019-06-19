@@ -25,4 +25,6 @@
 
     <color name="main_yellow_sub_color">#fd9b00</color>
 
+    <color name="lw_edit_bg_color">#EFEFEF</color>
+
 </resources>
