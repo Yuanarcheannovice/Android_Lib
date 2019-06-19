@@ -8,6 +8,10 @@
 
     <color name="lw_txt_color_3">#333333</color>
 
+    <color name="lw_txt_color_1">#111111</color>
+
+    <color name="lw_txt_color_8">#888888</color>
+
     <color name="lw_progress_dialog_color">#FF4081</color>
 
     <!--分割线-->

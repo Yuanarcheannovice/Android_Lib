@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--@android:style/Theme.DeviceDefault.Light.Dialog-->
-    <style name="AppProgressDialog" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="lw_AppProgressDialog" parent="Theme.AppCompat.Dialog.Alert">
         <!--文字大小-->
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/lw_txt_color_3</item>
@@ -21,4 +21,14 @@
         <item name="android:indeterminateTintMode" tools:ignore="NewApi">src_atop</item>
     </style>
 
+    <!--输入框所在dialog去掉白边-->
+    <style name="lw_EdittextAlertDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/black</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

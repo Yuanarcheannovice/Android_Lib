@@ -71,7 +71,7 @@ public class AppProgressDialog extends ProgressDialog {
         //做小于21的兼容，保证dialog不会变形
         AppProgressDialog dialog;
         if (Build.VERSION.SDK_INT >= 21) {
-            dialog = new AppProgressDialog(context, R.style.AppProgressDialog);
+            dialog = new AppProgressDialog(context, R.style.lw_AppProgressDialog);
         } else {
             dialog = new AppProgressDialog(context, AlertDialog.THEME_HOLO_LIGHT);
         }
