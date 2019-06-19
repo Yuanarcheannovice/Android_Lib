@@ -43,6 +43,17 @@ public class CommentInputDialog extends AlertDialog {
         return this;
     }
 
+    /**
+     * @param hintStr 默认文字
+     * @return dialog
+     */
+    public CommentInputDialog setEditTextHint(String hintStr) {
+        if (mInputEditText != null) {
+            mInputEditText.setHint(hintStr);
+        }
+        return this;
+    }
+
     public CommentInputDialog(@NonNull Context context) {
         this(context, R.style.lw_EdittextAlertDialog);
     }
