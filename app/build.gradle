@@ -31,4 +31,5 @@ dependencies {
     implementation project(':lib_adapter')
     implementation project(':lib_util')
     implementation project(':lib_widget')
+    implementation project(path: ':lib_app_update')
 }

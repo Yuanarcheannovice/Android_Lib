@@ -11,9 +11,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.archeanx.lib.adapter.XRvStatusAdapter;
 import com.archeanx.lib.adapter.xutil.XRvViewHolder;
+import com.archeanx.lib.appupdate.AppUpdateManager;
+import com.archeanx.lib.appupdate.OnAppUpdateStatusListener;
 import com.archeanx.lib.util.DpToUtil;
 import com.archeanx.lib.util.ToastUtil;
 import com.archeanx.lib.widget.divider.XRvVerDivider;
@@ -91,11 +94,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.am_show_toast).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.setGravity(Gravity.CENTER,0,0);
-                ToastUtil.setTextSize(20);
-                ToastUtil.setToastBackground(R.drawable.lib_util_toast_bg_shape_red);
-                ToastUtil.showLong("asfsdafassdfdvsaaljfsdlfjalsjljljljagl;difjasncd;nlk;xnvurghiuasdhgiuhfzs;dklfa;ljsdlfjalsdfjlsafjasldfjkasldfjklsdfjeifhlkdsvn,sdafas;");
-//                ToastUtil.show("aljfsdlfjalsjljljljagl;difjasnc");
+                AppUpdateManager.getInstance().inspectVersion(MainActivity.this, "更新App", "http://news.wisdomforcloud.com/13.apk");
             }
         });
 
@@ -108,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         adapter.setDatas(lists, true);
+
+        AppUpdateManager.getInstance().setOnAppUpdateStatusListener(new OnAppUpdateStatusListener() {
+
+            @Override
+            public void onRunning() {
+                ToastUtil.show("正在下载App更新包");
+            }
+        });
 
     }
 
