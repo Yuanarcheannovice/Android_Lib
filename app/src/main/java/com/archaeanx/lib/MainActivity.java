@@ -1,17 +1,21 @@
 package com.archaeanx.lib;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.archeanx.lib.adapter.XRvStatusAdapter;
 import com.archeanx.lib.adapter.xutil.XRvViewHolder;
+import com.archeanx.lib.util.DpToUtil;
+import com.archeanx.lib.util.ToastUtil;
 import com.archeanx.lib.widget.divider.XRvVerDivider;
 
 import java.util.ArrayList;
@@ -79,6 +83,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.e("showLogn_begin", Long.toString(System.currentTimeMillis()));
+        ToastUtil.init(this);
+        ToastUtil.show("aljfsdlfjalsjljljljagl;difjasnc");
+        Log.e("showLogn_endee", Long.toString(System.currentTimeMillis()));
+
+        findViewById(R.id.am_show_toast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.setGravity(Gravity.CENTER,0,0);
+                ToastUtil.setTextSize(20);
+                ToastUtil.setToastBackground(R.drawable.lib_util_toast_bg_shape_red);
+                ToastUtil.showLong("asfsdafassdfdvsaaljfsdlfjalsjljljljagl;difjasncd;nlk;xnvurghiuasdhgiuhfzs;dklfa;ljsdlfjalsdfjlsafjasldfjkasldfjklsdfjeifhlkdsvn,sdafas;");
+//                ToastUtil.show("aljfsdlfjalsjljljljagl;difjasnc");
+            }
+        });
+
         RecyclerView recyclerView = findViewById(R.id.am_rv);
         recyclerView.setItemViewCacheSize(10);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

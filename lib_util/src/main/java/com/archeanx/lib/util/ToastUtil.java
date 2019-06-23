@@ -3,9 +3,15 @@ package com.archeanx.lib.util;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -15,13 +21,13 @@ import android.widget.Toast;
  */
 public class ToastUtil {
 
-    private Toast sToast;
+    private Toast mToast;
 
     private long sOneTime = 0L;
     /**
      * 上一次需要发送的消息
      */
-    private String sOldmsg;
+    private String mOldmsg;
 
     /**
      * 上下文对象
@@ -29,6 +35,42 @@ public class ToastUtil {
     private Context mContext;
 
     private Handler handler;
+    /**
+     * toast文字
+     */
+    private TextView mToastTv;
+    /**
+     * taost背景
+     */
+    private View mToastlayout;
+
+    /**
+     * 显示的位置
+     */
+    private int mGravity = Gravity.BOTTOM;
+    /**
+     * X 轴偏移量
+     */
+    private int mXOffset = 0;
+    /**
+     * Y 轴偏移量
+     */
+    private int mYOffset = 200;
+    /**
+     * toast文字颜色
+     */
+    @ColorInt
+    private int mTextColor = 0;
+
+    /**
+     * 文字大小 (px)
+     */
+    private float mTextSize = 0;
+
+    /**
+     * toast 背景
+     */
+    private int mToastBackgroundResource = 0;
 
 
     private ToastUtil() {
@@ -43,47 +85,129 @@ public class ToastUtil {
         private static final ToastUtil INSTANCE = new ToastUtil();
     }
 
+    /**
+     * 初始化Context
+     *
+     * @param context Application
+     */
     public static void init(@NonNull Context context) {
-        // 初始化Context
         getInstance().mContext = context;
     }
 
+    /**
+     * 显示一个短暂的toast
+     *
+     * @param str 需要显示的文字
+     */
     private void toast(String str) {
         toast(str, false);
     }
 
+    /**
+     * @param str    需要显示的内容
+     * @param isLong 是否长时间显示
+     */
     private void toast(String str, boolean isLong) {
         if (mContext == null) {
             throw new RuntimeException("Please init the Context before showToast");
         }
-        if (sToast == null) {
-            sToast = Toast.makeText(mContext, str, Toast.LENGTH_SHORT);
-//            View toastlayout = LayoutInflater.from(App.sAppContext).inflate(R.layout.view_layout_toast, null);
-//            sToastTv = toastlayout.findViewById(R.id.lt_tv);
-//            //toast显示在屏幕中间
-//            sToast.setGravity(Gravity.CENTER, 0, 200);
-//            sToast.setView(toastlayout);
+        if (mToast == null) {
+            mToast = Toast.makeText(mContext, "", Toast.LENGTH_SHORT);
+            //toast显示位置
+            mToast.setGravity(mGravity, mXOffset, mYOffset);
+            mToastlayout = LayoutInflater.from(mContext).inflate(R.layout.lib_util_toast_layout, null);
+            if (mToastBackgroundResource != 0) {
+                mToastlayout.setBackgroundResource(mToastBackgroundResource);
+            }
+            mToastTv = mToastlayout.findViewById(R.id.lib_util_toast_txt);
+            if (mTextColor != 0) {
+                mToastTv.setTextColor(mTextColor);
+            }
+            if (mTextSize != 0) {
+                mToastTv.setTextSize(mTextSize);
+            }
+            mToast.setView(mToastlayout);
         }
         long sTwoTime = System.currentTimeMillis();
-        if (TextUtils.equals(sOldmsg, str)) {
+        if (TextUtils.equals(mOldmsg, str)) {
             if (sTwoTime - sOneTime > Toast.LENGTH_SHORT) {
-                sToast.setText(str);
-                sToast.setDuration(isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
-                sToast.show();
+                mToastTv.setText(str);
+                mToast.setDuration(isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
+                mToast.show();
             }
         } else {
-            sOldmsg = str;
-            sToast.setText(str);
-            sToast.setDuration(isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
-            sToast.show();
+            mOldmsg = str;
+            mToastTv.setText(str);
+            mToast.setDuration(isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
+            mToast.show();
         }
 
         sOneTime = sTwoTime;
     }
 
+
+    /**
+     * 设置toast 位置
+     *
+     * @param gravity Gravity.CENTER
+     * @param xOffset 0
+     * @param yOffset 200
+     * @return toastutil
+     * @see android.view.Gravity
+     */
+    public static void setGravity(int gravity, int xOffset, int yOffset) {
+        if (getInstance().mToast == null) {
+            getInstance().mGravity = gravity;
+            getInstance().mXOffset = xOffset;
+            getInstance().mYOffset = yOffset;
+        } else {
+            getInstance().mToast.setGravity(gravity, xOffset, yOffset);
+        }
+    }
+
+    /**
+     * 设置toast文字颜色
+     *
+     * @param textColor 颜色值 非 IdRes
+     */
+    public static void setTextColor(@ColorInt int textColor) {
+        if (getInstance().mToastTv == null) {
+            getInstance().mTextColor = textColor;
+        } else {
+            getInstance().mToastTv.setTextColor(textColor);
+        }
+    }
+
+    /**
+     * 设置文字大小 sp
+     * 单位sp
+     * @param textSize 文字大小 The scaled pixel size.
+     */
+    public static void setTextSize(float textSize) {
+        if (getInstance().mToastTv == null) {
+            getInstance().mTextSize = textSize;
+        } else {
+            getInstance().mToastTv.setTextSize(textSize);
+        }
+    }
+
+    /**
+     * 设置toast 背景
+     *
+     * @param toastBackground 背景 drawable Res
+     */
+    public static void setToastBackground(@DrawableRes int toastBackground) {
+        if (getInstance().mToastlayout == null) {
+            getInstance().mToastBackgroundResource = toastBackground;
+        } else {
+            getInstance().mToastlayout.setBackgroundResource(toastBackground);
+        }
+    }
+
+
     private void showLongStr(String str) {
         if (!TextUtils.isEmpty(str)) {
-            toast(str,true);
+            toast(str, true);
         }
     }
 
