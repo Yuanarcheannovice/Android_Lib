@@ -65,25 +65,33 @@ public class AppUpdateManager {
     }
 
     /**
-     * @param context           context
+     * 初始化 context ,因为需要监听广播和弹出框，必须是非applicationContext
+     * 建议在主页面 init，可以使 context 不会泄露内存，
+     * 当然在其他页面使用也是可以的，记得release
+     *
+     * @param context 必须是非applicationContext
+     */
+    public void init(Context context) {
+        mContext = context;
+    }
+
+    /**
      * @param notificationTitle 通知栏头部
      * @param apkUrl            apk下载路径；
      */
-    public void inspectVersion(Context context, String notificationTitle, final String apkUrl) {
-        inspectVersion(context, notificationTitle, apkUrl, null, false);
+    public void inspectVersion(String notificationTitle, final String apkUrl) {
+        inspectVersion(notificationTitle, apkUrl, null, false);
     }
 
     /**
      * 检查下载环境
      *
-     * @param context           context
      * @param notificationTitle 通知栏头部
      * @param apkUrl            apk下载路径；
      * @param tipMessage        提示信息
      * @param isForce           是否强制更新  true-强制
      */
-    public void inspectVersion(Context context, String notificationTitle, final String apkUrl, String tipMessage, boolean isForce) {
-        mContext = context;
+    public void inspectVersion(String notificationTitle, final String apkUrl, String tipMessage, boolean isForce) {
         mDownloadTitle = notificationTitle;
         if (TextUtils.isEmpty(apkUrl)) {
             throw new NullPointerException("appUrl is null");
