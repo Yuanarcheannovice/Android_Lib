@@ -181,7 +181,7 @@ public class AppUpdateManager {
     /**
      * 是否可以下载
      */
-    private boolean isBeginDownload() {
+    public boolean isBeginDownload() {
         if (mAppUpdateReceiver == null) {
             return true;
         }
