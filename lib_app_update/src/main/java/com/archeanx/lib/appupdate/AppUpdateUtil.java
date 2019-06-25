@@ -53,9 +53,6 @@ public class AppUpdateUtil {
         if (!file.exists()) {
             return;
         }
-        if (!inspectInstallApk(context)) {
-            return;
-        }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //判断是否是AndroidN以及更高的版本
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
