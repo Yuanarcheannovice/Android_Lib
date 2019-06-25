@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.archeanx.lib.appupdate">
 
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
@@ -12,7 +11,7 @@
 
         <provider
             android:name=".provider.AppUpdateFileProvider"
-            android:authorities="com.archeanx.lib.appupdate.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

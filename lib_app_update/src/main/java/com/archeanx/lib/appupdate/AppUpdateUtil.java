@@ -23,7 +23,7 @@ public class AppUpdateUtil {
      */
     public static boolean inspectInstallApk(Context context) {
         //兼容8.0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.O) {
             // 判断是否有权限
             boolean haveInstallPermission = context.getApplicationContext().getPackageManager().canRequestPackageInstalls();
             if (!haveInstallPermission) {
@@ -57,7 +57,7 @@ public class AppUpdateUtil {
         //判断是否是AndroidN以及更高的版本
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Uri contentUri = FileProvider.getUriForFile(context, "com.archeanx.lib.appupdate.fileprovider", file);
+            Uri contentUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName()+".fileprovider", file);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {

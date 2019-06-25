@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 
 import java.io.File;
@@ -123,16 +124,20 @@ public class AppUpdateManager {
         builder.setTitle("提示!")
                 .setCancelable(!isForce)
                 .setMessage(tipMessage)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        downloadApk(apkUrl);
-                    }
-                });
+                .setPositiveButton("确定", null);
         if (!isForce) {
             builder.setNeutralButton("取消", null);
         }
-        builder.show();
+        final AlertDialog show = builder.show();
+        show.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AppUpdateUtil.inspectInstallApk(mContext)) {
+                    show.dismiss();
+                    downloadApk(apkUrl);
+                }
+            }
+        });
     }
 
 
