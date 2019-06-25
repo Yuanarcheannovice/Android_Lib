@@ -63,7 +63,7 @@ public class AppUpdateReceiver extends BroadcastReceiver {
                 int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
                 if (status == DownloadManager.STATUS_SUCCESSFUL) {
                     //下载成功，安装apk
-                    AppUpdateUtil.inspectInstallApk(context, new File(fileUrl));
+                    AppUpdateUtil.installApk(context, new File(fileUrl));
                 } else if (status == DownloadManager.STATUS_FAILED) {
                     Toast.makeText(context.getApplicationContext(), "下载错误，更新App失败", Toast.LENGTH_LONG).show();
                 }

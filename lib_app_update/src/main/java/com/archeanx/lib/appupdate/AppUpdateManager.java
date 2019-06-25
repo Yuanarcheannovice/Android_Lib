@@ -95,6 +95,11 @@ public class AppUpdateManager {
      * @param isForce           是否强制更新  true-强制
      */
     public void inspectVersion(String notificationTitle, final String apkUrl, String tipMessage, boolean isForce) {
+        // 检查8.0 安装权限
+        if (!AppUpdateUtil.inspectInstallApk(mContext)) {
+            return;
+        }
+
         mDownloadTitle = notificationTitle;
         if (TextUtils.isEmpty(apkUrl)) {
             throw new NullPointerException("appUrl is null");
@@ -130,7 +135,7 @@ public class AppUpdateManager {
                     }
                 });
         if (!isForce) {
-            builder.setNegativeButton("取消", null);
+            builder.setNeutralButton("取消", null);
         }
         builder.show();
     }
