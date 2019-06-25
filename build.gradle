@@ -29,7 +29,7 @@ task clean(type: Delete) {
 //全局设置版本
 ext {
     minSdkVersion = 19
-    targetSdkVersion = 19
+    targetSdkVersion = 28
     compileSdkVersion = 28
     supportVersion = '28.0.0'
     constraintLayout = '1.1.3'
