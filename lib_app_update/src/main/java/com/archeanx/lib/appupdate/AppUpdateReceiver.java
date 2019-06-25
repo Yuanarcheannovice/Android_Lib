@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.preference.PreferenceManager;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
@@ -60,7 +63,7 @@ public class AppUpdateReceiver extends BroadcastReceiver {
                 int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
                 if (status == DownloadManager.STATUS_SUCCESSFUL) {
                     //下载成功，安装apk
-                    installApk(context, new File(fileUrl));
+                    AppUpdateUtil.inspectInstallApk(context, new File(fileUrl));
                 } else if (status == DownloadManager.STATUS_FAILED) {
                     Toast.makeText(context.getApplicationContext(), "下载错误，更新App失败", Toast.LENGTH_LONG).show();
                 }
@@ -69,23 +72,6 @@ public class AppUpdateReceiver extends BroadcastReceiver {
     }
 
 
-    /**
-     * 安装APK文件
-     */
-    private void installApk(Context context, File file) {
-        if (file == null) {
-            return;
-        }
-        if (!file.exists()) {
-            return;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        // 通过Intent安装APK文件
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //获取文件后缀
-        String extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath());
-        intent.setDataAndType(Uri.fromFile(file), MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase()));
-        context.startActivity(intent);
-        mDownloadManager.remove(mDownloadId);
-    }
+
+
 }

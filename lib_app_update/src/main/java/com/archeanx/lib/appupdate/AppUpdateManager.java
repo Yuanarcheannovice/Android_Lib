@@ -22,6 +22,8 @@ import java.io.File;
 public class AppUpdateManager {
 
 
+    private String mApkName;
+
     private static class SingletonHolder {
         private static AppUpdateManager instance = new AppUpdateManager();
     }
@@ -73,6 +75,7 @@ public class AppUpdateManager {
      */
     public void init(Context context) {
         mContext = context;
+        mApkName = mContext.getApplicationContext().getPackageName() + ".apk";
     }
 
     /**
@@ -108,13 +111,12 @@ public class AppUpdateManager {
         /**
          * apk 文件夹 存储路径
          */
-        String saveFileFolderPath = getSaveApkPath(mContext);
-        File file = new File(saveFileFolderPath);
+        File file = getSaveApkPath(mContext);
         if (!file.exists()) {
             //todo 需要做判断 手机空间是否足够的判断
             file.mkdirs();
         }
-        mSaveFilePath = saveFileFolderPath + mContext.getPackageName() + ".apk";
+        mSaveFilePath = file.getPath() + "/" + mApkName;
         delApk(new File(mSaveFilePath));
         //如果服务器的AppCode大于本地的,表示需要更新
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -140,7 +142,7 @@ public class AppUpdateManager {
      * @param apkUri apk下载路径
      */
     private void downloadApk(String apkUri) {
-        Log.e("downloadApk", "下载了");
+        Log.d("downloadApk", "下载了");
         mAppUpdateReceiver = new AppUpdateReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
@@ -152,25 +154,24 @@ public class AppUpdateManager {
 
         //在下载过程中通知栏会一直显示该下载的Notification，
         // 在下载完成后该Notification会继续显示，直到用户点击该Notification或者消除该Notification。
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
         // 设置下载中通知栏提示的标题
         request.setTitle(mDownloadTitle);
         // 设置下载中通知栏提示的介绍
         request.setDescription("应用正在下载,点击取消");
+
         //这个文件是你的应用所专用的,软件卸载后，下载的文件将随着卸载全部被删除
-        request.setDestinationUri(Uri.fromFile(new File(mSaveFilePath)));
+        request.setDestinationInExternalFilesDir(mContext.getApplicationContext(), Environment.DIRECTORY_DOWNLOADS, mApkName);
 
+        request.setVisibleInDownloadsUi(true);
         //设置请求的Mime
-        String extension = MimeTypeMap.getFileExtensionFromUrl(apkUri);
-        request.setMimeType(MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase()));
+        request.setMimeType("application/vnd.android.package-archive");
 
-        //在下载过程中通知栏会一直显示该下载的Notification，在下载完成后该Notification会继续显示，
-        // 直到用户点击该Notification或者消除该Notification。
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
         //下载的id
         mDownloadId = downloadManager.enqueue(request);
+
         mAppUpdateReceiver.setDownloadId(mDownloadId);
         mAppUpdateReceiver.setFileUrl(mSaveFilePath);
         if (mOnAppUpdateStatusListener != null) {
@@ -226,7 +227,7 @@ public class AppUpdateManager {
                 if (mOnAppUpdateStatusListener != null) {
                     mOnAppUpdateStatusListener.onDownloadSuccess();
                 }
-                return false;
+                return true;
             default:
                 return true;
         }
@@ -260,20 +261,8 @@ public class AppUpdateManager {
     }
 
 
-    private static StringBuffer getExternalRootFilesCachePath(Context context) {
-        if (context.getApplicationContext().getExternalCacheDir() == null) {
-            return new StringBuffer(context.getApplicationContext().getCacheDir()
-                    .getAbsolutePath()).append("/");
-        }
-        return new StringBuffer(context.getApplicationContext().getExternalFilesDir(
-                Environment.MEDIA_MOUNTED).getAbsolutePath()).append("/");
-    }
-
-    private static String getSaveApkPath(Context context) {
-        if (TextUtils.isEmpty(getExternalRootFilesCachePath(context).toString())) {
-            return "";
-        }
-        return getExternalRootFilesCachePath(context).append("appApk/").toString();
+    private static File getSaveApkPath(Context context) {
+        return context.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
     }
 
 

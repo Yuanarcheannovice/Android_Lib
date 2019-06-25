@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppUpdateManager.getInstance().init(this);
         Log.e("showLogn_begin", Long.toString(System.currentTimeMillis()));
         ToastUtil.init(this);
         ToastUtil.show("aljfsdlfjalsjljljljagl;difjasnc");
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.am_show_toast).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUpdateManager.getInstance().inspectVersion(MainActivity.this, "更新App", "http://news.wisdomforcloud.com/13.apk");
+                AppUpdateManager.getInstance().inspectVersion( "更新App", "http://news.wisdomforcloud.com/17.apk");
             }
         });
 
