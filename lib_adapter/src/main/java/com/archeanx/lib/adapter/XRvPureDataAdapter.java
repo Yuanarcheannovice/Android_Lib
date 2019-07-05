@@ -98,7 +98,7 @@ public abstract class XRvPureDataAdapter<T> extends XRvPureAdapter {
         } else {
             this.mDatas.addAll(data);
             if (isRefresh) {
-                notifyItemRangeInserted(mDatas.size() - data.size() - 1, data.size());
+                notifyItemRangeInserted(mDatas.size() - data.size() , data.size());
             }
         }
     }

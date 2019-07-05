@@ -164,18 +164,17 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     }
 
 
-
     /**
      * 显示数据为空
      */
     public void showEmpty(boolean empty) {
-        showEmpty(empty,"暂无数据...");
+        showEmpty(empty, "暂无数据...");
     }
 
     /**
      * 显示数据为空
      */
-    public void showEmpty(boolean empty,String emtyStr) {
+    public void showEmpty(boolean empty, String emtyStr) {
         if (empty) {
             mItemStatusIndex = ITEM_STATUS_EMPTY;
             if (mDatas == null) {
@@ -201,15 +200,15 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      * 显示加载错误
      */
     public void showError(boolean isShow) {
-       showError(isShow,"加载失败,请检查网络!");
+        showError(isShow, "加载失败,请检查网络!");
     }
 
 
     /**
      * 显示加载错误
      */
-    public void showError(boolean isShow,String msg) {
-        showError(isShow,msg,"");
+    public void showError(boolean isShow, String msg) {
+        showError(isShow, msg, "");
     }
 
     /**
@@ -257,12 +256,20 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
 
     @Override
     public void addData(T data, boolean isRefresh) {
+        if (mItemStatusIndex != ITEM_STATUS_DEFAULT) {
+            //移除状态view
+            mDatas.remove(initStatusLayout());
+        }
         mItemStatusIndex = ITEM_STATUS_DEFAULT;
         super.addData(data, isRefresh);
     }
 
     @Override
     public void addDatas(List<T> data, boolean isRefresh) {
+        if (mItemStatusIndex != ITEM_STATUS_DEFAULT) {
+            //移除状态view
+            mDatas.remove(initStatusLayout());
+        }
         mItemStatusIndex = ITEM_STATUS_DEFAULT;
         super.addDatas(data, isRefresh);
     }
@@ -345,7 +352,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                         } else if (mItemStatusIndex == ITEM_STATUS_EMPTY) {
                             mOnStatusItemClickListener.onStatusEmptyClick();
                         } else if (mItemStatusIndex == ITEM_STATUS_ERROR) {
-                            mOnStatusItemClickListener.onStatusErrorClick(mStatusTip,mStatusSubTip);
+                            mOnStatusItemClickListener.onStatusErrorClick(mStatusTip, mStatusSubTip);
                         }
                     }
                 });
@@ -402,7 +409,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
         /**
          * 加载错误的点击
          */
-        public abstract void onStatusErrorClick(String statusTip,String subStatusTip);
+        public abstract void onStatusErrorClick(String statusTip, String subStatusTip);
 
         /**
          * 加载 数据为空的点击
