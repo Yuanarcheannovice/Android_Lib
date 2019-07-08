@@ -12,9 +12,9 @@ allprojects {
  }
  
  dependencies {
-    implementation 'com.archeanx.android:lib_base:version'
+    implementation 'com.archeanx.android:@libName:@version'
   }
 ```
 lib 和 版本号:
 
-![xml](https://github.com/Yuanarcheannovice/Android_Lib/blob/master/lib_version.xml)
+![file](https://github.com/Yuanarcheannovice/Android_Lib/blob/master/lib_version.xml)
