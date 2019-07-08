@@ -16,5 +16,5 @@ allprojects {
   }
 ```
 lib 和 版本号:
-
+https://github.com/Yuanarcheannovice/Android_Lib/blob/master/lib_version.xml
 ![](https://github.com/Yuanarcheannovice/Android_Lib/blob/master/lib_version.xml)
