@@ -121,7 +121,7 @@ public class AppUpdateManager {
         delApk(new File(mSaveFilePath));
         //如果服务器的AppCode大于本地的,表示需要更新
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("提示!")
+        builder.setTitle("App更新提示!")
                 .setCancelable(!isForce)
                 .setMessage(tipMessage)
                 .setPositiveButton("确定", null);
