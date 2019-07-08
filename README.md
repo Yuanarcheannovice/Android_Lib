@@ -15,6 +15,5 @@ allprojects {
     implementation 'com.archeanx.android:@libName:@version'
   }
 ```
-lib 和 版本号:
+lib 和 版本号 传送门:
 https://github.com/Yuanarcheannovice/Android_Lib/blob/master/lib_version.xml
-![](https://github.com/Yuanarcheannovice/Android_Lib/blob/master/lib_version.xml)
