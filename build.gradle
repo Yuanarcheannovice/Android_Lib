@@ -39,8 +39,14 @@ ext {
     repoName = 'Android_Lib'
     groupId = 'com.archeanx.android'
 
-    //本地地址
+    //maven 本地地址
     maven_url = "../maven"
 
+    //版本 本地地址
+    version_url = "../lib_version.xml"
+
+
 }
+
+
 

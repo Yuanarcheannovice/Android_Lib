@@ -44,6 +44,37 @@ uploadArchives {
             version project.android.defaultConfig.versionName // 版本号
         }
     }
+
+    //写入版本号
+    def xmlFile = new File(uri(rootProject.ext.version_url))
+
+    def xmlObj = new XmlParser().parse(xmlFile)
+
+    println(">---wirte "+project.name+" version begin-------")
+    println(">---file url:" + xmlFile.absolutePath)
+    def oldVersion
+
+    def versionObj = xmlObj.get(project.name)
+    if (versionObj instanceof List) {
+        List versionObjs = xmlObj.get(project.name)
+        if (versionObjs.size() > 0) {
+            //修改节点
+            oldVersion = xmlObj.get(project.name)[0].attributes().get("value")
+            xmlObj.get(project.name)[0].attributes().put("value", project.android.defaultConfig.versionName)
+
+        } else {
+            //新建节点
+            oldVersion="0"
+            Map<String, String> map = new HashMap<>()
+            map.put("value", project.android.defaultConfig.versionName)
+            xmlObj.appendNode(project.name, map)
+        }
+    }
+
+    println(">---" + oldVersion + "  --> " + xmlObj.get(project.name)[0].attributes().get("value"))
+    println(">---wirte lib version end-------")
+    //写入文件
+    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile))).print(xmlObj)
 }
 
 // 指定编码
