@@ -19,6 +19,7 @@ import com.archeanx.lib.appupdate.AppUpdateManager;
 import com.archeanx.lib.appupdate.OnAppUpdateStatusListener;
 import com.archeanx.lib.util.DpToUtil;
 import com.archeanx.lib.util.ToastUtil;
+import com.archeanx.lib.widget.dialog.AppProgressDialog_;
 import com.archeanx.lib.widget.divider.XRvVerDivider;
 
 import java.util.ArrayList;
@@ -117,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        AppProgressDialog_.show(this,"加载中");
     }
 
 

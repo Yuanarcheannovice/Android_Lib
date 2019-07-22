@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.widget.ProgressBar;
 
 import com.archeanx.lib.widget.R;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * 官方dialogUpdate
  */
 
+@Deprecated
 public class AppProgressDialog extends ProgressDialog {
     private static List<AppProgressDialog> mListDialog;
 
