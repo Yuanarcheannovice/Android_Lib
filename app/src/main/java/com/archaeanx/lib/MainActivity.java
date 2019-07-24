@@ -1,25 +1,15 @@
 package com.archaeanx.lib;
 
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.archeanx.lib.adapter.XRvStatusAdapter;
-import com.archeanx.lib.adapter.xutil.XRvViewHolder;
 import com.archeanx.lib.appupdate.AppUpdateManager;
 import com.archeanx.lib.appupdate.OnAppUpdateStatusListener;
-import com.archeanx.lib.util.DpToUtil;
 import com.archeanx.lib.util.ToastUtil;
-import com.archeanx.lib.widget.dialog.AppProgressDialog_;
 import com.archeanx.lib.widget.divider.XRvVerDivider;
 
 import java.util.ArrayList;
