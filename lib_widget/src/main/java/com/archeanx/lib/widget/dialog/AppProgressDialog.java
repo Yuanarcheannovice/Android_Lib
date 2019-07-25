@@ -19,6 +19,7 @@ import java.util.List;
  * @author xz
  * @date 2017/7/11 0011
  * 官方dialogUpdate
+ * 推荐使用 {@link XProgressDialog}
  */
 
 @Deprecated

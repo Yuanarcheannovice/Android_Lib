@@ -1,6 +1,5 @@
 package com.archaeanx.lib;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,7 @@ import com.archeanx.lib.widget.divider.XRvVerDivider;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class TestMainActivity extends AppCompatActivity {
     private static final int ITEM_1 = 111;
     private static final int ITEM_2 = 222;
     private static final int ITEM_3 = 333;
@@ -86,10 +85,14 @@ public class MainActivity extends AppCompatActivity {
         Log.e("showLogn_endee", Long.toString(System.currentTimeMillis()));
 
         findViewById(R.id.am_show_toast).setOnClickListener(new View.OnClickListener() {
+
+            private XProgressDialog mProgressDialog;
+
             @Override
             public void onClick(View v) {
-                //  XProgressDialog.show(MainActivity.this,"不在加载中");
-                startActivity(new Intent(MainActivity.this, TestMainActivity.class));
+                XProgressDialog.show(TestMainActivity.this, "不在加载中");
+
+
                 //AppUpdateManager.getInstance().inspectVersion( "更新App", "http://news.wisdomforcloud.com/17.apk");
             }
         });
