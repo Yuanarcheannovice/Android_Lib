@@ -73,6 +73,29 @@ public class XProgressDialog extends AlertDialog {
     }
 
     /**
+     * 关闭dialog
+     */
+    public static void onClose(){
+        if (sDialog != null) {
+            if (sDialog.isShowing()) {
+                sDialog.cancel();
+            }
+        }
+    }
+
+    /**
+     * 释放
+     */
+    public static void onRelease(){
+        if (sDialog != null) {
+            if (sDialog.isShowing()) {
+                sDialog.cancel();
+            }
+            sDialog = null;
+        }
+    }
+
+    /**
      * dialog.getContext的hasCode值 和 传入的context 不一致
      * 所以需要自己 提取context
      */
