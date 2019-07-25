@@ -56,7 +56,9 @@ public class XProgressDialog extends AlertDialog {
         sDialog.setCancelable(cancelable);
         sDialog.setOnCancelListener(cancelListener);
         sDialog.setMessage(message);
-        sDialog.show();
+        if (!sDialog.isShowing()) {
+            sDialog.show();
+        }
         return sDialog;
     }
 
@@ -75,7 +77,7 @@ public class XProgressDialog extends AlertDialog {
     /**
      * 关闭dialog
      */
-    public static void onClose(){
+    public static void onClose() {
         if (sDialog != null) {
             if (sDialog.isShowing()) {
                 sDialog.cancel();
@@ -86,7 +88,7 @@ public class XProgressDialog extends AlertDialog {
     /**
      * 释放
      */
-    public static void onRelease(){
+    public static void onRelease() {
         if (sDialog != null) {
             if (sDialog.isShowing()) {
                 sDialog.cancel();

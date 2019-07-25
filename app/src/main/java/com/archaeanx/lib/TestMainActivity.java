@@ -92,7 +92,12 @@ public class TestMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 XProgressDialog.show(TestMainActivity.this, "不在加载中");
 
-
+                App.sAppHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        XProgressDialog.show(TestMainActivity.this, "1111");
+                    }
+                },2000);
                 //AppUpdateManager.getInstance().inspectVersion( "更新App", "http://news.wisdomforcloud.com/17.apk");
             }
         });
