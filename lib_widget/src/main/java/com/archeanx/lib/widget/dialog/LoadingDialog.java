@@ -80,10 +80,12 @@ public class LoadingDialog {
     }
 
 
+    @Deprecated
     public void refresProgress(final float progress, long total) {
         refresProgress(progress, total, "正在下载:");
     }
 
+    @Deprecated
     public void refresProgress(final float progress, long total, final String showStr) {
         if (mProgressBar != null) {
             mProgressBar.post(new Runnable() {
@@ -102,6 +104,30 @@ public class LoadingDialog {
             });
         }
     }
+
+    public void refresProgress(int progress) {
+        refresProgress(progress, "正在下载:");
+    }
+
+    public void refresProgress(final int progress, final String showStr) {
+        if (mProgressBar != null) {
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressBar.setProgress(progress);
+                }
+            });
+        }
+        if (mProgressTv != null) {
+            mProgressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressTv.setText(showStr + ((progress) + "/100"));
+                }
+            });
+        }
+    }
+
 
     public void refresProgressToNumber(final float progress, final long total, final String showStr) {
         refresProgressToNumber(progress, total, showStr, false);

@@ -5,8 +5,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.0.6"
+        versionCode 7
+        versionName "1.0.7"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,7 +30,7 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     //facebook出品的
-    api 'com.facebook.fresco:fresco:1.8.1'
+    implementation 'com.facebook.fresco:fresco:1.8.1'
 }
 
 
