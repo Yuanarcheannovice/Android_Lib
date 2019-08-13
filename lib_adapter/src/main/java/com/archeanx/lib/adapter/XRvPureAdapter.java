@@ -14,7 +14,7 @@ import com.archeanx.lib.adapter.xutil.XRvViewHolder;
  * 一个简单封装了，Rl点击事件的类，
  *
  * @author xz
- *  2016/8/15 0015
+ * 2016/8/15 0015
  * <p>
  * 纯净版的adapter(没有head，footer，多layout控制 数据控制，只有点击事件)
  */
@@ -60,7 +60,9 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
                     @Override
                     public void onClick(View v) {
                         int position = viewHolder.getAdapterPosition();
-                        mOnItemClickListener.onItemClick(v, viewHolder, position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            mOnItemClickListener.onItemClick(v, viewHolder, position);
+                        }
                     }
                 });
             }
@@ -71,9 +73,14 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
                     @Override
                     public boolean onLongClick(View v) {
                         int position = viewHolder.getAdapterPosition();
-                        return mOnItemLongClickListener.onItemLongClick(v, viewHolder, position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            return mOnItemLongClickListener.onItemLongClick(v, viewHolder, position);
+                        } else {
+                            return false;
+                        }
                     }
                 });
+
             }
         }
         if (mOnItemFocusableListener != null) {
@@ -82,7 +89,10 @@ public abstract class XRvPureAdapter extends RecyclerView.Adapter<XRvViewHolder>
                 viewHolder.getConvertView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        mOnItemFocusableListener.onItemFocusable(v, hasFocus, viewHolder, viewHolder.getAdapterPosition());
+                        int position = viewHolder.getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mOnItemFocusableListener.onItemFocusable(v, hasFocus, viewHolder, position);
+                        }
                     }
                 });
             }
