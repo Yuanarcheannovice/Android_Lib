@@ -138,10 +138,25 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
      */
     protected abstract T initStatusLayout();
 
+
     /**
      * 显示正在加载中
      */
     public void showLoading(boolean loading) {
+        showLoading("加载中...", "", loading);
+    }
+
+    /**
+     * 显示正在加载中
+     */
+    public void showLoading(String tip, boolean loading) {
+        showLoading(tip, "", loading);
+    }
+
+    /**
+     * 显示正在加载中
+     */
+    public void showLoading(String tip, String subTip, boolean loading) {
         if (loading) {
             mItemStatusIndex = ITEM_STATUS_LOADING;
             if (mDatas == null) {
@@ -151,8 +166,8 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
                 mDatas.clear();
             }
             mDatas.add(initStatusLayout());
-            mStatusTip = "加载中...";
-            mStatusSubTip = "";
+            mStatusTip = tip;
+            mStatusSubTip = subTip;
             notifyDataSetChanged();
         } else {
             mItemStatusIndex = ITEM_STATUS_DEFAULT;

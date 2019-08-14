@@ -5,8 +5,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20
-        versionName "1.2.0"
+        versionCode 21
+        versionName "1.2.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -50,7 +50,7 @@ uploadArchives {
 
     def xmlObj = new XmlParser().parse(xmlFile)
 
-    println(">---wirte "+project.name+" version begin-------")
+    println(">---wirte " + project.name + " version begin-------")
     println(">---file url:" + xmlFile.absolutePath)
     def oldVersion
 
@@ -64,7 +64,7 @@ uploadArchives {
 
         } else {
             //新建节点
-            oldVersion="0"
+            oldVersion = "0"
             Map<String, String> map = new HashMap<>()
             map.put("value", project.android.defaultConfig.versionName)
             xmlObj.appendNode(project.name, map)
