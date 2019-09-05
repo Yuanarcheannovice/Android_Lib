@@ -1,5 +1,5 @@
 <version>
-  <lib_adapter value="1.2.2"/>
+  <lib_adapter value="1.2.3"/>
   <lib_app_update value="1.0.9"/>
   <lib_base value="1.1.1"/>
   <lib_crosswalk value="1.0.2"/>

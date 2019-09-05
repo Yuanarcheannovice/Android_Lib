@@ -273,7 +273,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     public void addData(T data, boolean isRefresh) {
         if (mItemStatusIndex != ITEM_STATUS_DEFAULT) {
             //移除状态view
-            mDatas.remove(initStatusLayout());
+            mDatas.clear();
             notifyDataSetChanged();
         }
         mItemStatusIndex = ITEM_STATUS_DEFAULT;
@@ -284,7 +284,7 @@ public abstract class XRvStatusAdapter<T> extends XRvPureDataAdapter<T> {
     public void addDatas(List<T> data, boolean isRefresh) {
         if (mItemStatusIndex != ITEM_STATUS_DEFAULT) {
             //移除状态view
-            mDatas.remove(initStatusLayout());
+            mDatas.clear();
             notifyDataSetChanged();
         }
         mItemStatusIndex = ITEM_STATUS_DEFAULT;
